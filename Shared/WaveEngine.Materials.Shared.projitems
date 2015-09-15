@@ -1,0 +1,184 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup Label="SharedProjectFile_SccProperties">
+    <SharedProjectFile_ProjectGuid>{89cc20d6-2b7d-4f28-b069-62763b31db2b}</SharedProjectFile_ProjectGuid>
+    <SharedProjectFile_SccProjectName>SAK</SharedProjectFile_SccProjectName>
+    <SharedProjectFile_SccAuxPath>SAK</SharedProjectFile_SccAuxPath>
+    <SharedProjectFile_SccLocalPath>SAK</SharedProjectFile_SccLocalPath>
+    <SharedProjectFile_SccProvider>SAK</SharedProjectFile_SccProvider>
+  </PropertyGroup>
+  <PropertyGroup>
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <SharedGUID>e84f04c8-3afd-4071-afbe-8fd5e52defdb</SharedGUID>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration">
+    <Import_RootNamespace>WaveEngine.Materials</Import_RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Shaders\GLSL\LPPGBuffer\psGBuffer.frag" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Shaders\GLSL\LPPGBuffer\vsGBuffer.vert" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Shaders\HLSL\LPPGBuffer\psGBuffer.fxo" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Shaders\HLSL\LPPGBuffer\psGBuffer_DEPTH.fxo" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Shaders\HLSL\LPPGBuffer\psGBuffer_MRT.fxo" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Shaders\HLSL\LPPGBuffer\psGBuffer_NORMAL.fxo" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Shaders\HLSL\LPPGBuffer\psGBuffer_NORMAL_DEPTH.fxo" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Shaders\HLSL\LPPGBuffer\psGBuffer_NORMAL_MRT.fxo" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Shaders\HLSL\LPPGBuffer\vsGBuffer.fxo" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Shaders\HLSL\LPPGBuffer\vsGBuffer_NORMAL.fxo" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Shaders\GLSL\DualMaterial\psDualMaterial.frag" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Shaders\GLSL\DualMaterial\vsDualMaterial.vert" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Shaders\HLSL\DualMaterial\psDualMaterial.fxo" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Shaders\HLSL\DualMaterial\psDualMaterial_FIRST.fxo" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Shaders\HLSL\DualMaterial\psDualMaterial_FIRST_SECON_ADD.fxo" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Shaders\HLSL\DualMaterial\psDualMaterial_FIRST_SECON_MSK.fxo" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Shaders\HLSL\DualMaterial\psDualMaterial_FIRST_SECON_MUL.fxo" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Shaders\HLSL\DualMaterial\psDualMaterial_LIT.fxo" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Shaders\HLSL\DualMaterial\psDualMaterial_LIT_FIRST.fxo" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Shaders\HLSL\DualMaterial\psDualMaterial_LIT_FIRST_SECON_ADD.fxo" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Shaders\HLSL\DualMaterial\psDualMaterial_LIT_FIRST_SECON_MSK.fxo" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Shaders\HLSL\DualMaterial\psDualMaterial_LIT_FIRST_SECON_MUL.fxo" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Shaders\HLSL\DualMaterial\psDualMaterial_LIT_SECON.fxo" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Shaders\HLSL\DualMaterial\psDualMaterial_SECON.fxo" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Shaders\HLSL\DualMaterial\vsDualMaterial.fxo" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Shaders\HLSL\EnvironmentMaterial\psEnvironmentMaterial.fxo" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Shaders\HLSL\EnvironmentMaterial\psEnvironmentMaterial_DIFF.fxo" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Shaders\HLSL\EnvironmentMaterial\psEnvironmentMaterial_DIFF_ENV.fxo" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Shaders\HLSL\EnvironmentMaterial\psEnvironmentMaterial_DIFF_ENV_NORMAL.fxo" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Shaders\HLSL\EnvironmentMaterial\psEnvironmentMaterial_ENV.fxo" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Shaders\HLSL\EnvironmentMaterial\psEnvironmentMaterial_ENV_NORMAL.fxo" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Shaders\HLSL\EnvironmentMaterial\psEnvironmentMaterial_FRES_DIFF_ENV.fxo" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Shaders\HLSL\EnvironmentMaterial\psEnvironmentMaterial_FRES_DIFF_ENV_NORMAL.fxo" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Shaders\HLSL\EnvironmentMaterial\psEnvironmentMaterial_LIT.fxo" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Shaders\HLSL\EnvironmentMaterial\psEnvironmentMaterial_LIT_DIFF.fxo" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Shaders\HLSL\EnvironmentMaterial\psEnvironmentMaterial_LIT_DIFF_ENV.fxo" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Shaders\HLSL\EnvironmentMaterial\psEnvironmentMaterial_LIT_ENV.fxo" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Shaders\HLSL\EnvironmentMaterial\psEnvironmentMaterial_LIT_FRES_DIFF_ENV.fxo" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Shaders\HLSL\EnvironmentMaterial\vsEnvironmentMaterial.fxo" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Shaders\HLSL\EnvironmentMaterial\vsEnvironmentMaterial_DIFF.fxo" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Shaders\HLSL\EnvironmentMaterial\vsEnvironmentMaterial_LIT.fxo" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Shaders\HLSL\EnvironmentMaterial\vsEnvironmentMaterial_LIT_DIFF.fxo" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Shaders\HLSL\EnvironmentMaterial\vsEnvironmentMaterial_DIFF_NORMAL.fxo" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Shaders\HLSL\EnvironmentMaterial\vsEnvironmentMaterial_NORMAL.fxo" />
+    <None Include="$(MSBuildThisFileDirectory)Shaders\HLSL\LPPGBuffer\CompileGBufferShaders.cmd" />
+    <None Include="$(MSBuildThisFileDirectory)Shaders\HLSL\LPPGBuffer\LPPGBuffer.fx" />
+    <None Include="$(MSBuildThisFileDirectory)Shaders\HLSL\SkyboxMaterial\SkyboxEffect.fx" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Shaders\HLSL\SkyboxMaterial\SkyboxEffectpsSkybox.fxo" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Shaders\HLSL\SkyboxMaterial\SkyboxEffectvsSkybox.fxo" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Shaders\GLSL\EnvironmentMaterial\psEnvironmentMaterial.frag" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Shaders\GLSL\EnvironmentMaterial\vsEnvironmentMaterial.vert" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Shaders\GLSL\SkyboxMaterial\SkyboxEffectpsSkybox.frag" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Shaders\GLSL\SkyboxMaterial\SkyboxEffectvsSkybox.vert" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Shaders\GLSL\StandardMaterial\psStandardMaterial.frag" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Shaders\GLSL\StandardMaterial\vsStandardMaterial.vert" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Shaders\HLSL\StandardMaterial\psStandardMaterial.fxo" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Shaders\HLSL\StandardMaterial\psStandardMaterial_AMBI.fxo" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Shaders\HLSL\StandardMaterial\psStandardMaterial_AMBI_ATEST.fxo" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Shaders\HLSL\StandardMaterial\psStandardMaterial_AMBI_DIFF.fxo" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Shaders\HLSL\StandardMaterial\psStandardMaterial_AMBI_DIFF_VCOLOR.fxo" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Shaders\HLSL\StandardMaterial\psStandardMaterial_AMBI_DIFF_VCOLOR_ATEST.fxo" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Shaders\HLSL\StandardMaterial\psStandardMaterial_AMBI_EMIS.fxo" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Shaders\HLSL\StandardMaterial\psStandardMaterial_AMBI_EMIS_SPEC.fxo" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Shaders\HLSL\StandardMaterial\psStandardMaterial_AMBI_EMIS_SPEC_DIFF.fxo" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Shaders\HLSL\StandardMaterial\psStandardMaterial_AMBI_EMIS_SPEC_DIFF_VCOLOR.fxo" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Shaders\HLSL\StandardMaterial\psStandardMaterial_AMBI_EMIS_SPEC_DIFF_VCOLOR_ATEST.fxo" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Shaders\HLSL\StandardMaterial\psStandardMaterial_AMBI_SPEC.fxo" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Shaders\HLSL\StandardMaterial\psStandardMaterial_AMBI_SPEC_DIFF.fxo" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Shaders\HLSL\StandardMaterial\psStandardMaterial_AMBI_SPEC_DIFF_VCOLOR.fxo" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Shaders\HLSL\StandardMaterial\psStandardMaterial_AMBI_SPEC_DIFF_VCOLOR_ATEST.fxo" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Shaders\HLSL\StandardMaterial\psStandardMaterial_AMBI_VCOLOR.fxo" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Shaders\HLSL\StandardMaterial\psStandardMaterial_AMBI_VCOLOR_ATEST.fxo" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Shaders\HLSL\StandardMaterial\psStandardMaterial_ATEST.fxo" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Shaders\HLSL\StandardMaterial\psStandardMaterial_DIFF.fxo" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Shaders\HLSL\StandardMaterial\psStandardMaterial_DIFF_ATEST.fxo" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Shaders\HLSL\StandardMaterial\psStandardMaterial_DIFF_VCOLOR.fxo" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Shaders\HLSL\StandardMaterial\psStandardMaterial_DIFF_VCOLOR_ATEST.fxo" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Shaders\HLSL\StandardMaterial\psStandardMaterial_EMIS.fxo" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Shaders\HLSL\StandardMaterial\psStandardMaterial_EMIS_ATEST.fxo" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Shaders\HLSL\StandardMaterial\psStandardMaterial_EMIS_DIFF.fxo" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Shaders\HLSL\StandardMaterial\psStandardMaterial_EMIS_DIFF_VCOLOR.fxo" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Shaders\HLSL\StandardMaterial\psStandardMaterial_EMIS_DIFF_VCOLOR_ATEST.fxo" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Shaders\HLSL\StandardMaterial\psStandardMaterial_EMIS_SPEC.fxo" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Shaders\HLSL\StandardMaterial\psStandardMaterial_EMIS_SPEC_DIFF.fxo" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Shaders\HLSL\StandardMaterial\psStandardMaterial_EMIS_SPEC_DIFF_VCOLOR.fxo" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Shaders\HLSL\StandardMaterial\psStandardMaterial_EMIS_SPEC_DIFF_VCOLOR_ATEST.fxo" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Shaders\HLSL\StandardMaterial\psStandardMaterial_EMIS_VCOLOR.fxo" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Shaders\HLSL\StandardMaterial\psStandardMaterial_EMIS_VCOLOR_ATEST.fxo" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Shaders\HLSL\StandardMaterial\psStandardMaterial_LIT.fxo" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Shaders\HLSL\StandardMaterial\psStandardMaterial_LIT_AMBI.fxo" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Shaders\HLSL\StandardMaterial\psStandardMaterial_LIT_AMBI_ATEST.fxo" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Shaders\HLSL\StandardMaterial\psStandardMaterial_LIT_AMBI_DIFF.fxo" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Shaders\HLSL\StandardMaterial\psStandardMaterial_LIT_AMBI_DIFF_VCOLOR.fxo" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Shaders\HLSL\StandardMaterial\psStandardMaterial_LIT_AMBI_DIFF_VCOLOR_ATEST.fxo" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Shaders\HLSL\StandardMaterial\psStandardMaterial_LIT_AMBI_EMIS.fxo" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Shaders\HLSL\StandardMaterial\psStandardMaterial_LIT_AMBI_EMIS_SPEC.fxo" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Shaders\HLSL\StandardMaterial\psStandardMaterial_LIT_AMBI_EMIS_SPEC_DIFF.fxo" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Shaders\HLSL\StandardMaterial\psStandardMaterial_LIT_AMBI_EMIS_SPEC_DIFF_VCOLOR.fxo" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Shaders\HLSL\StandardMaterial\psStandardMaterial_LIT_AMBI_EMIS_SPEC_DIFF_VCOLOR_ATEST.fxo" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Shaders\HLSL\StandardMaterial\psStandardMaterial_LIT_AMBI_SPEC.fxo" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Shaders\HLSL\StandardMaterial\psStandardMaterial_LIT_AMBI_SPEC_DIFF.fxo" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Shaders\HLSL\StandardMaterial\psStandardMaterial_LIT_AMBI_SPEC_DIFF_VCOLOR.fxo" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Shaders\HLSL\StandardMaterial\psStandardMaterial_LIT_AMBI_SPEC_DIFF_VCOLOR_ATEST.fxo" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Shaders\HLSL\StandardMaterial\psStandardMaterial_LIT_AMBI_VCOLOR.fxo" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Shaders\HLSL\StandardMaterial\psStandardMaterial_LIT_AMBI_VCOLOR_ATEST.fxo" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Shaders\HLSL\StandardMaterial\psStandardMaterial_LIT_ATEST.fxo" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Shaders\HLSL\StandardMaterial\psStandardMaterial_LIT_DIFF.fxo" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Shaders\HLSL\StandardMaterial\psStandardMaterial_LIT_DIFF_ATEST.fxo" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Shaders\HLSL\StandardMaterial\psStandardMaterial_LIT_DIFF_VCOLOR.fxo" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Shaders\HLSL\StandardMaterial\psStandardMaterial_LIT_DIFF_VCOLOR_ATEST.fxo" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Shaders\HLSL\StandardMaterial\psStandardMaterial_LIT_EMIS.fxo" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Shaders\HLSL\StandardMaterial\psStandardMaterial_LIT_EMIS_ATEST.fxo" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Shaders\HLSL\StandardMaterial\psStandardMaterial_LIT_EMIS_DIFF.fxo" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Shaders\HLSL\StandardMaterial\psStandardMaterial_LIT_EMIS_DIFF_VCOLOR.fxo" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Shaders\HLSL\StandardMaterial\psStandardMaterial_LIT_EMIS_DIFF_VCOLOR_ATEST.fxo" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Shaders\HLSL\StandardMaterial\psStandardMaterial_LIT_EMIS_SPEC.fxo" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Shaders\HLSL\StandardMaterial\psStandardMaterial_LIT_EMIS_SPEC_DIFF.fxo" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Shaders\HLSL\StandardMaterial\psStandardMaterial_LIT_EMIS_SPEC_DIFF_VCOLOR.fxo" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Shaders\HLSL\StandardMaterial\psStandardMaterial_LIT_EMIS_SPEC_DIFF_VCOLOR_ATEST.fxo" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Shaders\HLSL\StandardMaterial\psStandardMaterial_LIT_EMIS_VCOLOR.fxo" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Shaders\HLSL\StandardMaterial\psStandardMaterial_LIT_EMIS_VCOLOR_ATEST.fxo" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Shaders\HLSL\StandardMaterial\psStandardMaterial_LIT_SPEC.fxo" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Shaders\HLSL\StandardMaterial\psStandardMaterial_LIT_SPEC_ATEST.fxo" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Shaders\HLSL\StandardMaterial\psStandardMaterial_LIT_SPEC_DIFF.fxo" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Shaders\HLSL\StandardMaterial\psStandardMaterial_LIT_SPEC_DIFF_VCOLOR.fxo" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Shaders\HLSL\StandardMaterial\psStandardMaterial_LIT_SPEC_DIFF_VCOLOR_ATEST.fxo" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Shaders\HLSL\StandardMaterial\psStandardMaterial_LIT_SPEC_VCOLOR.fxo" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Shaders\HLSL\StandardMaterial\psStandardMaterial_LIT_SPEC_VCOLOR_ATEST.fxo" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Shaders\HLSL\StandardMaterial\psStandardMaterial_LIT_VCOLOR.fxo" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Shaders\HLSL\StandardMaterial\psStandardMaterial_LIT_VCOLOR_ATEST.fxo" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Shaders\HLSL\StandardMaterial\psStandardMaterial_SPEC.fxo" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Shaders\HLSL\StandardMaterial\psStandardMaterial_SPEC_ATEST.fxo" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Shaders\HLSL\StandardMaterial\psStandardMaterial_SPEC_DIFF.fxo" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Shaders\HLSL\StandardMaterial\psStandardMaterial_SPEC_DIFF_VCOLOR.fxo" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Shaders\HLSL\StandardMaterial\psStandardMaterial_SPEC_DIFF_VCOLOR_ATEST.fxo" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Shaders\HLSL\StandardMaterial\psStandardMaterial_SPEC_VCOLOR.fxo" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Shaders\HLSL\StandardMaterial\psStandardMaterial_SPEC_VCOLOR_ATEST.fxo" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Shaders\HLSL\StandardMaterial\psStandardMaterial_VCOLOR.fxo" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Shaders\HLSL\StandardMaterial\psStandardMaterial_VCOLOR_ATEST.fxo" />
+    <None Include="$(MSBuildThisFileDirectory)Shaders\HLSL\StandardMaterial\StandardMaterial.fx" />
+    <None Include="$(MSBuildThisFileDirectory)Shaders\HLSL\StandardMaterial\CompileShaders.cmd" />
+    <None Include="$(MSBuildThisFileDirectory)Shaders\HLSL\DualMaterial\DualTexture.fx" />
+    <None Include="$(MSBuildThisFileDirectory)Shaders\HLSL\DualMaterial\CompileShaders.cmd" />
+    <None Include="$(MSBuildThisFileDirectory)Shaders\HLSL\EnvironmentMaterial\EnvironmentMaterial.fx" />
+    <None Include="$(MSBuildThisFileDirectory)Shaders\HLSL\EnvironmentMaterial\CompileShaders.cmd" />
+    <None Include="$(MSBuildThisFileDirectory)Shaders\HLSL\Helpers.fxh" />
+    <None Include="$(MSBuildThisFileDirectory)Shaders\HLSL\Lighting.fxh" />
+    <None Include="$(MSBuildThisFileDirectory)Shaders\HLSL\SkyboxMaterial\CompileShaders.cmd" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Shaders\HLSL\StandardMaterial\vsStandardMaterial.fxo" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Shaders\HLSL\StandardMaterial\vsStandardMaterial_VCOLOR.fxo" />
+    <None Include="$(MSBuildThisFileDirectory)Shaders\HLSL\Structures.fxh" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)StandardMaterial.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)DualMaterial.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)EnvironmentMaterial.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)SkyboxMaterial.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)VertexFormats\VertexNormalMapping.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)VertexFormats\VertexNormalMappingLightMap.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)VertexFormats\VertexPositionColorDualTexture.cs" />
+  </ItemGroup>
+</Project>
