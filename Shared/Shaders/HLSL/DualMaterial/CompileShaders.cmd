@@ -14,6 +14,7 @@ call :CompileShader ps psDualTexture SECON
 call :CompileShader ps psDualTexture FIRST SECON MUL
 call :CompileShader ps psDualTexture FIRST SECON ADD
 call :CompileShader ps psDualTexture FIRST SECON MSK
+call :CompileShader ps psDualTexture FIRST SECON LMAP
 
 call :CompileShader ps psDualTexture LIT
 call :CompileShader ps psDualTexture LIT FIRST
@@ -21,6 +22,7 @@ call :CompileShader ps psDualTexture LIT SECON
 call :CompileShader ps psDualTexture LIT FIRST SECON MUL
 call :CompileShader ps psDualTexture LIT FIRST SECON ADD
 call :CompileShader ps psDualTexture LIT FIRST SECON MSK
+call :CompileShader ps psDualTexture LIT FIRST SECON LMAP
 
 echo.
 

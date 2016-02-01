@@ -75,14 +75,20 @@ void main(void)
 
 #ifdef FIRST 
 #ifdef SECON
+	color = DiffuseColor;
+	#ifdef LMAP
+		color.rgb *= diffuse1.rgb * 2.0;
+		color *= diffuse2;
+	#endif
+
 	#ifdef MUL
-		color.rgb = diffuse1.rgb * 2.0;
+		color.rgb *= diffuse1.rgb;
 		color *= diffuse2;
 	#endif
 
 	#ifdef ADD
 		diffuse1.rgb += diffuse2.rgb;
-		color = clamp(diffuse1, 0.0, 1.0);
+		color *= clamp(diffuse1, 0.0, 1.0);
 	#endif
 
 	#ifdef MSK

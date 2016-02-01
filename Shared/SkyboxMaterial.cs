@@ -20,7 +20,6 @@ namespace WaveEngine.Materials
     /// <summary>
     /// Skybox effect material.
     /// </summary>
-    ////[DataContract(Namespace = "WaveEngine.Materials")]
     public class SkyboxMaterial : Material
     {
         /// <summary>

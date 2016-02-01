@@ -101,18 +101,24 @@ float4 psDualTexture(VS_OUT input) : SV_Target0
 #endif
 
 #if FIRST && SECON
+	color = DiffuseColor;
+	#if LMAP	
+		color.rgb *= diffuse1.rgb * 2;
+		color *= diffuse2;
+	#endif
+
 	#if MUL
-		color.rgb = diffuse1.rgb * 2;
+		color.rgb *= diffuse1.rgb;
 		color *= diffuse2;
 	#endif
 
 	#if ADD
 		diffuse1.rgb += diffuse2.rgb;
-		color = clamp(diffuse1, 0, 1);
+		color *= clamp(diffuse1, 0, 1);
 	#endif
 
 	#if MSK
-		color.rgb = lerp(diffuse1.rgb, diffuse2.rgb, diffuse2.a);
+		color.rgb *= lerp(diffuse1.rgb, diffuse2.rgb, diffuse2.a);
 	#endif
 #endif
 

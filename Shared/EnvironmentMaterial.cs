@@ -28,11 +28,6 @@ namespace WaveEngine.Materials
     public class EnvironmentMaterial : DeferredMaterial
     {
         /// <summary>
-        /// Technique initialized
-        /// </summary>
-        private static bool techniqueInitialized = false;
-
-        /// <summary>
         /// The diffuse color
         /// </summary>
         [DataMember]
@@ -459,13 +454,16 @@ namespace WaveEngine.Materials
                 {
                     technique += "G";
 
-                    if (this.graphicsDevice.RenderTargets.IsDepthAsTextureSupported)
+                    if (this.graphicsDevice != null)
                     {
-                        technique += "D";
-                    }
-                    else if (this.graphicsDevice.RenderTargets.IsMRTsupported)
-                    {
-                        technique += "R";
+                        if (this.graphicsDevice.RenderTargets.IsDepthAsTextureSupported)
+                        {
+                            technique += "D";
+                        }
+                        else if (this.graphicsDevice.RenderTargets.IsMRTsupported)
+                        {
+                            technique += "R";
+                        }
                     }
 
                     if (this.normal != null)
@@ -510,7 +508,24 @@ namespace WaveEngine.Materials
                     }
                 }
 
-                return techniques[index].Name;
+                ShaderTechnique seletedTechnique = techniques[index];
+
+                // Lazy initialization
+                if (!seletedTechnique.IsInitialized)
+                {
+                    if (this.DeferredLightingPass == DeferredLightingPass.GBufferPass)
+                    {
+                        this.Parameters = this.gbufferShaderParameters;
+                    }
+                    else
+                    {
+                        this.Parameters = this.shaderParameters;
+                    }
+
+                    seletedTechnique.Initialize(this);
+                }
+
+                return seletedTechnique.Name;
             }
         }
         #endregion
@@ -589,20 +604,9 @@ namespace WaveEngine.Materials
             this.shaderParameters = new MaterialParameters();
             this.gbufferShaderParameters = new GBufferMaterialParameters();
 
-            if (!techniqueInitialized)
-            {
-                // Initialize Forward techniques
-                this.Parameters = this.shaderParameters;
-                var techniqueList = techniques.Where(t => !t.Name.StartsWith("G")).ToArray();
-                this.InitializeTechniques(techniqueList);
-
-                // Initialize GBuffer techniques
-                this.Parameters = this.gbufferShaderParameters;
-                techniqueList = techniques.Where(t => t.Name.StartsWith("G")).ToArray();
-                this.InitializeTechniques(techniqueList);
-
-                techniqueInitialized = true;
-            }
+            // ToDo: You need to initialize at least one technique
+            this.Parameters = this.shaderParameters;
+            techniques[0].Initialize(this);
         }
 
         /// <summary>

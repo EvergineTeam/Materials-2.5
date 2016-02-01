@@ -28,11 +28,6 @@ namespace WaveEngine.Materials
     public class StandardMaterial : DeferredMaterial
     {
         /// <summary>
-        /// Technique initialized
-        /// </summary>
-        private static bool techniqueInitialized = false;
-
-        /// <summary>
         /// The diffuse color
         /// </summary>
         [DataMember]
@@ -111,100 +106,105 @@ namespace WaveEngine.Materials
         private static ShaderTechnique[] techniques =
         {
             // Forward pass            
-            new ShaderTechnique("Simple", "vsStandardMaterial", "psStandardMaterial", VertexPositionTexture.VertexFormat),
+            new ShaderTechnique("Simple",   "vsStandardMaterial", "psStandardMaterial", VertexPositionTexture.VertexFormat),
             
-            new ShaderTechnique("L", "vsStandardMaterial", "psStandardMaterial", VertexPositionTexture.VertexFormat, null, new string[] { "LIT" }),
-            new ShaderTechnique("LA", "vsStandardMaterial", "psStandardMaterial", VertexPositionTexture.VertexFormat, null, new string[] { "LIT", "AMBI" }),
-            new ShaderTechnique("LAE", "vsStandardMaterial", "psStandardMaterial", VertexPositionTexture.VertexFormat, null, new string[] { "LIT", "AMBI", "EMIS" }),
-            new ShaderTechnique("LAES", "vsStandardMaterial", "psStandardMaterial", VertexPositionTexture.VertexFormat, null, new string[] { "LIT", "AMBI", "EMIS", "SPEC" }),
-            new ShaderTechnique("LAESD", "vsStandardMaterial", "psStandardMaterial", VertexPositionTexture.VertexFormat, null, new string[] { "LIT", "AMBI", "EMIS", "SPEC", "DIFF" }),
-            new ShaderTechnique("LAESDV", "vsStandardMaterial", "psStandardMaterial", VertexPositionColorTexture.VertexFormat, new string[] { "VCOLOR" }, new string[] { "LIT", "AMBI", "EMIS", "SPEC", "DIFF", "VCOLOR" }),
-            new ShaderTechnique("LAESDVT", "vsStandardMaterial", "psStandardMaterial", VertexPositionColorTexture.VertexFormat, new string[] { "VCOLOR" }, new string[] { "LIT", "AMBI", "EMIS", "SPEC", "DIFF", "VCOLOR", "ATEST" }),
-            new ShaderTechnique("LAS", "vsStandardMaterial", "psStandardMaterial", VertexPositionTexture.VertexFormat, null, new string[] { "LIT", "AMBI", "SPEC" }),
-            new ShaderTechnique("LASD", "vsStandardMaterial", "psStandardMaterial", VertexPositionTexture.VertexFormat, null, new string[] { "LIT", "AMBI", "SPEC", "DIFF" }),
-            new ShaderTechnique("LASDV", "vsStandardMaterial", "psStandardMaterial", VertexPositionColorTexture.VertexFormat, new string[] { "VCOLOR" }, new string[] { "LIT", "AMBI", "SPEC", "DIFF", "VCOLOR" }),
-            new ShaderTechnique("LASDVT", "vsStandardMaterial", "psStandardMaterial", VertexPositionColorTexture.VertexFormat, new string[] { "VCOLOR" }, new string[] { "LIT", "AMBI", "SPEC", "DIFF", "VCOLOR", "ATEST" }),
-            new ShaderTechnique("LAD", "vsStandardMaterial", "psStandardMaterial", VertexPositionTexture.VertexFormat, null, new string[] { "LIT", "AMBI", "DIFF" }),
-            new ShaderTechnique("LADV", "vsStandardMaterial", "psStandardMaterial", VertexPositionColorTexture.VertexFormat, new string[] { "VCOLOR" }, new string[] { "LIT", "AMBI", "DIFF", "VCOLOR" }),
-            new ShaderTechnique("LADVT", "vsStandardMaterial", "psStandardMaterial", VertexPositionColorTexture.VertexFormat, new string[] { "VCOLOR" }, new string[] { "LIT", "AMBI", "DIFF", "VCOLOR", "ATEST" }),
-            new ShaderTechnique("LAV", "vsStandardMaterial", "psStandardMaterial", VertexPositionColorTexture.VertexFormat, new string[] { "VCOLOR" }, new string[] { "LIT", "AMBI", "VCOLOR" }),
-            new ShaderTechnique("LAVT", "vsStandardMaterial", "psStandardMaterial", VertexPositionColorTexture.VertexFormat, new string[] { "VCOLOR" }, new string[] { "LIT", "AMBI", "VCOLOR", "ATEST" }),
-            new ShaderTechnique("LAT", "vsStandardMaterial", "psStandardMaterial", VertexPositionTexture.VertexFormat, null, new string[] { "LIT", "AMBI", "ATEST" }),
-            new ShaderTechnique("LE", "vsStandardMaterial", "psStandardMaterial", VertexPositionTexture.VertexFormat, null, new string[] { "LIT", "EMIS" }),
-            new ShaderTechnique("LES", "vsStandardMaterial", "psStandardMaterial", VertexPositionTexture.VertexFormat, null, new string[] { "LIT", "EMIS", "SPEC" }),
-            new ShaderTechnique("LESD", "vsStandardMaterial", "psStandardMaterial", VertexPositionTexture.VertexFormat, null, new string[] { "LIT", "EMIS", "SPEC", "DIFF" }),
-            new ShaderTechnique("LESDV", "vsStandardMaterial", "psStandardMaterial", VertexPositionColorTexture.VertexFormat, new string[] { "VCOLOR" }, new string[] { "LIT", "EMIS", "SPEC", "DIFF", "VCOLOR" }),
-            new ShaderTechnique("LESDVT", "vsStandardMaterial", "psStandardMaterial", VertexPositionColorTexture.VertexFormat, new string[] { "VCOLOR" }, new string[] { "LIT", "EMIS", "SPEC", "DIFF", "VCOLOR", "ATEST" }),
-            new ShaderTechnique("LED", "vsStandardMaterial", "psStandardMaterial", VertexPositionTexture.VertexFormat, null, new string[] { "LIT", "EMIS", "DIFF" }),
-            new ShaderTechnique("LEDV", "vsStandardMaterial", "psStandardMaterial", VertexPositionColorTexture.VertexFormat, new string[] { "VCOLOR" }, new string[] { "LIT", "EMIS", "DIFF", "VCOLOR" }),
-            new ShaderTechnique("LEDVT", "vsStandardMaterial", "psStandardMaterial", VertexPositionColorTexture.VertexFormat, new string[] { "VCOLOR" }, new string[] { "LIT", "EMIS", "DIFF", "VCOLOR", "ATEST" }),
-            new ShaderTechnique("LEV", "vsStandardMaterial", "psStandardMaterial", VertexPositionColorTexture.VertexFormat, new string[] { "VCOLOR" }, new string[] { "LIT", "EMIS", "VCOLOR" }),
-            new ShaderTechnique("LEVT", "vsStandardMaterial", "psStandardMaterial", VertexPositionColorTexture.VertexFormat, new string[] { "VCOLOR" }, new string[] { "LIT", "EMIS", "VCOLOR", "ATEST" }),
-            new ShaderTechnique("LET", "vsStandardMaterial", "psStandardMaterial", VertexPositionTexture.VertexFormat, null, new string[] { "LIT", "EMIS", "ATEST" }),
-            new ShaderTechnique("LS", "vsStandardMaterial", "psStandardMaterial", VertexPositionTexture.VertexFormat, null, new string[] { "LIT", "SPEC" }),
-            new ShaderTechnique("LSD", "vsStandardMaterial", "psStandardMaterial", VertexPositionTexture.VertexFormat, null, new string[] { "LIT", "SPEC", "DIFF" }),
-            new ShaderTechnique("LSDV", "vsStandardMaterial", "psStandardMaterial", VertexPositionColorTexture.VertexFormat, new string[] { "VCOLOR" }, new string[] { "LIT", "SPEC", "DIFF", "VCOLOR" }),
-            new ShaderTechnique("LSDVT", "vsStandardMaterial", "psStandardMaterial", VertexPositionColorTexture.VertexFormat, new string[] { "VCOLOR" }, new string[] { "LIT", "SPEC", "DIFF", "VCOLOR", "ATEST" }),
-            new ShaderTechnique("LSV", "vsStandardMaterial", "psStandardMaterial", VertexPositionColorTexture.VertexFormat, new string[] { "VCOLOR" }, new string[] { "LIT", "SPEC", "VCOLOR" }),
-            new ShaderTechnique("LSVT", "vsStandardMaterial", "psStandardMaterial", VertexPositionColorTexture.VertexFormat, new string[] { "VCOLOR" }, new string[] { "LIT", "SPEC", "VCOLOR", "ATEST" }),
-            new ShaderTechnique("LST", "vsStandardMaterial", "psStandardMaterial", VertexPositionTexture.VertexFormat, null, new string[] { "LIT", "SPEC", "ATEST" }),
-            new ShaderTechnique("LD", "vsStandardMaterial", "psStandardMaterial", VertexPositionTexture.VertexFormat, null, new string[] { "LIT", "DIFF" }),
-            new ShaderTechnique("LDV", "vsStandardMaterial", "psStandardMaterial", VertexPositionColorTexture.VertexFormat, new string[] { "VCOLOR" }, new string[] { "LIT", "DIFF", "VCOLOR" }),
-            new ShaderTechnique("LDVT", "vsStandardMaterial", "psStandardMaterial", VertexPositionColorTexture.VertexFormat, new string[] { "VCOLOR" }, new string[] { "LIT", "DIFF", "VCOLOR", "ATEST" }),
-            new ShaderTechnique("LDT", "vsStandardMaterial", "psStandardMaterial", VertexPositionTexture.VertexFormat, null, new string[] { "LIT", "DIFF", "ATEST" }),
-            new ShaderTechnique("LV", "vsStandardMaterial", "psStandardMaterial", VertexPositionColorTexture.VertexFormat, new string[] { "VCOLOR" }, new string[] { "LIT", "VCOLOR" }),
-            new ShaderTechnique("LVT", "vsStandardMaterial", "psStandardMaterial", VertexPositionColorTexture.VertexFormat, new string[] { "VCOLOR" }, new string[] { "LIT", "VCOLOR", "ATEST" }),
-            new ShaderTechnique("LT", "vsStandardMaterial", "psStandardMaterial", VertexPositionTexture.VertexFormat, null, new string[] { "LIT", "ATEST" }),
-            
-            new ShaderTechnique("A", "vsStandardMaterial", "psStandardMaterial", VertexPositionTexture.VertexFormat, null, new string[] { "AMBI" }),
-            new ShaderTechnique("AE", "vsStandardMaterial", "psStandardMaterial", VertexPositionTexture.VertexFormat, null, new string[] { "AMBI", "EMIS" }),
-            new ShaderTechnique("AES", "vsStandardMaterial", "psStandardMaterial", VertexPositionTexture.VertexFormat, null, new string[] { "AMBI", "EMIS", "SPEC" }),
-            new ShaderTechnique("AESD", "vsStandardMaterial", "psStandardMaterial", VertexPositionTexture.VertexFormat, null, new string[] { "AMBI", "EMIS", "SPEC", "DIFF" }),
-            new ShaderTechnique("AESDV", "vsStandardMaterial", "psStandardMaterial", VertexPositionColorTexture.VertexFormat, new string[] { "VCOLOR" }, new string[] { "AMBI", "EMIS", "SPEC", "DIFF", "VCOLOR" }),
-            new ShaderTechnique("AESDVT", "vsStandardMaterial", "psStandardMaterial", VertexPositionColorTexture.VertexFormat, new string[] { "VCOLOR" }, new string[] { "AMBI", "EMIS", "SPEC", "DIFF", "VCOLOR", "ATEST" }),
-            new ShaderTechnique("AS", "vsStandardMaterial", "psStandardMaterial", VertexPositionTexture.VertexFormat, null, new string[] { "AMBI", "SPEC" }),
-            new ShaderTechnique("ASD", "vsStandardMaterial", "psStandardMaterial", VertexPositionTexture.VertexFormat, null, new string[] { "AMBI", "SPEC", "DIFF" }),
-            new ShaderTechnique("ASDV", "vsStandardMaterial", "psStandardMaterial", VertexPositionColorTexture.VertexFormat, new string[] { "VCOLOR" }, new string[] { "AMBI", "SPEC", "DIFF", "VCOLOR" }),
-            new ShaderTechnique("ASDVT", "vsStandardMaterial", "psStandardMaterial", VertexPositionColorTexture.VertexFormat, new string[] { "VCOLOR" }, new string[] { "AMBI", "SPEC", "DIFF", "VCOLOR", "ATEST" }),
-            new ShaderTechnique("AD", "vsStandardMaterial", "psStandardMaterial", VertexPositionTexture.VertexFormat, null, new string[] { "AMBI", "DIFF" }),
-            new ShaderTechnique("ADV", "vsStandardMaterial", "psStandardMaterial", VertexPositionColorTexture.VertexFormat, new string[] { "VCOLOR" }, new string[] { "AMBI", "DIFF", "VCOLOR" }),
-            new ShaderTechnique("ADVT", "vsStandardMaterial", "psStandardMaterial", VertexPositionColorTexture.VertexFormat, new string[] { "VCOLOR" }, new string[] { "AMBI", "DIFF", "VCOLOR", "ATEST" }),
-            new ShaderTechnique("AV", "vsStandardMaterial", "psStandardMaterial", VertexPositionColorTexture.VertexFormat, new string[] { "VCOLOR" }, new string[] { "AMBI", "VCOLOR" }),
-            new ShaderTechnique("AVT", "vsStandardMaterial", "psStandardMaterial", VertexPositionColorTexture.VertexFormat, new string[] { "VCOLOR" }, new string[] { "AMBI", "VCOLOR", "ATEST" }),
-            new ShaderTechnique("AT", "vsStandardMaterial", "psStandardMaterial", VertexPositionTexture.VertexFormat, null, new string[] { "AMBI", "ATEST" }),
-            new ShaderTechnique("E", "vsStandardMaterial", "psStandardMaterial", VertexPositionTexture.VertexFormat, null, new string[] { "EMIS" }),
-            new ShaderTechnique("ES", "vsStandardMaterial", "psStandardMaterial", VertexPositionTexture.VertexFormat, null, new string[] { "EMIS", "SPEC" }),
-            new ShaderTechnique("ESD", "vsStandardMaterial", "psStandardMaterial", VertexPositionTexture.VertexFormat, null, new string[] { "EMIS", "SPEC", "DIFF" }),
-            new ShaderTechnique("ESDV", "vsStandardMaterial", "psStandardMaterial", VertexPositionColorTexture.VertexFormat, new string[] { "VCOLOR" }, new string[] { "EMIS", "SPEC", "DIFF", "VCOLOR" }),
-            new ShaderTechnique("ESDVT", "vsStandardMaterial", "psStandardMaterial", VertexPositionColorTexture.VertexFormat, new string[] { "VCOLOR" }, new string[] { "EMIS", "SPEC", "DIFF", "VCOLOR", "ATEST" }),
-            new ShaderTechnique("ED", "vsStandardMaterial", "psStandardMaterial", VertexPositionTexture.VertexFormat, null, new string[] { "EMIS", "DIFF" }),
-            new ShaderTechnique("EDV", "vsStandardMaterial", "psStandardMaterial", VertexPositionColorTexture.VertexFormat, new string[] { "VCOLOR" }, new string[] { "EMIS", "DIFF", "VCOLOR" }),
-            new ShaderTechnique("EDVT", "vsStandardMaterial", "psStandardMaterial", VertexPositionColorTexture.VertexFormat, new string[] { "VCOLOR" }, new string[] { "EMIS", "DIFF", "VCOLOR", "ATEST" }),
-            new ShaderTechnique("EV", "vsStandardMaterial", "psStandardMaterial", VertexPositionColorTexture.VertexFormat, new string[] { "VCOLOR" }, new string[] { "EMIS", "VCOLOR" }),
-            new ShaderTechnique("EVT", "vsStandardMaterial", "psStandardMaterial", VertexPositionColorTexture.VertexFormat, new string[] { "VCOLOR" }, new string[] { "EMIS", "VCOLOR", "ATEST" }),
-            new ShaderTechnique("ET", "vsStandardMaterial", "psStandardMaterial", VertexPositionTexture.VertexFormat, null, new string[] { "EMIS", "ATEST" }),
-            new ShaderTechnique("S", "vsStandardMaterial", "psStandardMaterial", VertexPositionTexture.VertexFormat, null, new string[] { "SPEC" }),
-            new ShaderTechnique("SD", "vsStandardMaterial", "psStandardMaterial", VertexPositionTexture.VertexFormat, null, new string[] { "SPEC", "DIFF" }),
-            new ShaderTechnique("SDV", "vsStandardMaterial", "psStandardMaterial", VertexPositionColorTexture.VertexFormat, new string[] { "VCOLOR" }, new string[] { "SPEC", "DIFF", "VCOLOR" }),
-            new ShaderTechnique("SDVT", "vsStandardMaterial", "psStandardMaterial", VertexPositionColorTexture.VertexFormat, new string[] { "VCOLOR" }, new string[] { "SPEC", "DIFF", "VCOLOR", "ATEST" }),
-            new ShaderTechnique("SV", "vsStandardMaterial", "psStandardMaterial", VertexPositionColorTexture.VertexFormat, new string[] { "VCOLOR" }, new string[] { "SPEC", "VCOLOR" }),
-            new ShaderTechnique("SVT", "vsStandardMaterial", "psStandardMaterial", VertexPositionColorTexture.VertexFormat, new string[] { "VCOLOR" }, new string[] { "SPEC", "VCOLOR", "ATEST" }),
-            new ShaderTechnique("ST", "vsStandardMaterial", "psStandardMaterial", VertexPositionTexture.VertexFormat, null, new string[] { "SPEC", "ATEST" }),
-            new ShaderTechnique("D", "vsStandardMaterial", "psStandardMaterial", VertexPositionTexture.VertexFormat, null, new string[] { "DIFF" }),
-            new ShaderTechnique("DV", "vsStandardMaterial", "psStandardMaterial", VertexPositionColorTexture.VertexFormat, new string[] { "VCOLOR" }, new string[] { "DIFF", "VCOLOR" }),
-            new ShaderTechnique("DVT", "vsStandardMaterial", "psStandardMaterial", VertexPositionColorTexture.VertexFormat, new string[] { "VCOLOR" }, new string[] { "DIFF", "VCOLOR", "ATEST" }),
-            new ShaderTechnique("DT", "vsStandardMaterial", "psStandardMaterial", VertexPositionTexture.VertexFormat, null, new string[] { "DIFF", "ATEST" }),
-            new ShaderTechnique("V", "vsStandardMaterial", "psStandardMaterial", VertexPositionColorTexture.VertexFormat, new string[] { "VCOLOR" }, new string[] { "VCOLOR" }),
-            new ShaderTechnique("VT", "vsStandardMaterial", "psStandardMaterial", VertexPositionColorTexture.VertexFormat, new string[] { "VCOLOR" }, new string[] { "VCOLOR", "ATEST" }),
-            new ShaderTechnique("T", "vsStandardMaterial", "psStandardMaterial", VertexPositionTexture.VertexFormat, null, new string[] { "ATEST" }),
+            new ShaderTechnique("L",        "vsStandardMaterial", "psStandardMaterial", VertexPositionTexture.VertexFormat,         null,                       new string[] { "LIT" }),
+            new ShaderTechnique("LA",       "vsStandardMaterial", "psStandardMaterial", VertexPositionTexture.VertexFormat,         null,                       new string[] { "LIT", "AMBI" }),
+            new ShaderTechnique("LAE",      "vsStandardMaterial", "psStandardMaterial", VertexPositionTexture.VertexFormat,         null,                       new string[] { "LIT", "AMBI", "EMIS" }),
+            new ShaderTechnique("LAES",     "vsStandardMaterial", "psStandardMaterial", VertexPositionTexture.VertexFormat,         null,                       new string[] { "LIT", "AMBI", "EMIS", "SPEC" }),
+            new ShaderTechnique("LAESD",    "vsStandardMaterial", "psStandardMaterial", VertexPositionTexture.VertexFormat,         null,                       new string[] { "LIT", "AMBI", "EMIS", "SPEC", "DIFF" }),
+            new ShaderTechnique("LAESDV",   "vsStandardMaterial", "psStandardMaterial", VertexPositionColorTexture.VertexFormat,    new string[] { "VCOLOR" },  new string[] { "LIT", "AMBI", "EMIS", "SPEC", "DIFF", "VCOLOR" }),
+            new ShaderTechnique("LAESDVT",  "vsStandardMaterial", "psStandardMaterial", VertexPositionColorTexture.VertexFormat,    new string[] { "VCOLOR" },  new string[] { "LIT", "AMBI", "EMIS", "SPEC", "DIFF", "VCOLOR", "ATEST" }),
+            new ShaderTechnique("LAS",      "vsStandardMaterial", "psStandardMaterial", VertexPositionTexture.VertexFormat,         null,                       new string[] { "LIT", "AMBI", "SPEC" }),
+            new ShaderTechnique("LASD",     "vsStandardMaterial", "psStandardMaterial", VertexPositionTexture.VertexFormat,         null,                       new string[] { "LIT", "AMBI", "SPEC", "DIFF" }),
+            new ShaderTechnique("LASDV",    "vsStandardMaterial", "psStandardMaterial", VertexPositionColorTexture.VertexFormat,    new string[] { "VCOLOR" },  new string[] { "LIT", "AMBI", "SPEC", "DIFF", "VCOLOR" }),
+            new ShaderTechnique("LASDVT",   "vsStandardMaterial", "psStandardMaterial", VertexPositionColorTexture.VertexFormat,    new string[] { "VCOLOR" },  new string[] { "LIT", "AMBI", "SPEC", "DIFF", "VCOLOR", "ATEST" }),
+            new ShaderTechnique("LAD",      "vsStandardMaterial", "psStandardMaterial", VertexPositionTexture.VertexFormat,         null,                       new string[] { "LIT", "AMBI", "DIFF" }),
+            new ShaderTechnique("LADV",     "vsStandardMaterial", "psStandardMaterial", VertexPositionColorTexture.VertexFormat,    new string[] { "VCOLOR" },  new string[] { "LIT", "AMBI", "DIFF", "VCOLOR" }),
+            new ShaderTechnique("LADVT",    "vsStandardMaterial", "psStandardMaterial", VertexPositionColorTexture.VertexFormat,    new string[] { "VCOLOR" },  new string[] { "LIT", "AMBI", "DIFF", "VCOLOR", "ATEST" }),
+            new ShaderTechnique("LAV",      "vsStandardMaterial", "psStandardMaterial", VertexPositionColorTexture.VertexFormat,    new string[] { "VCOLOR" },  new string[] { "LIT", "AMBI", "VCOLOR" }),
+            new ShaderTechnique("LAVT",     "vsStandardMaterial", "psStandardMaterial", VertexPositionColorTexture.VertexFormat,    new string[] { "VCOLOR" },  new string[] { "LIT", "AMBI", "VCOLOR", "ATEST" }),
+            new ShaderTechnique("LAT",      "vsStandardMaterial", "psStandardMaterial", VertexPositionTexture.VertexFormat,         null,                       new string[] { "LIT", "AMBI", "ATEST" }),
+            new ShaderTechnique("LE",       "vsStandardMaterial", "psStandardMaterial", VertexPositionTexture.VertexFormat,         null,                       new string[] { "LIT", "EMIS" }),
+            new ShaderTechnique("LES",      "vsStandardMaterial", "psStandardMaterial", VertexPositionTexture.VertexFormat,         null,                       new string[] { "LIT", "EMIS", "SPEC" }),
+            new ShaderTechnique("LESD",     "vsStandardMaterial", "psStandardMaterial", VertexPositionTexture.VertexFormat,         null,                       new string[] { "LIT", "EMIS", "SPEC", "DIFF" }),
+            new ShaderTechnique("LESDV",    "vsStandardMaterial", "psStandardMaterial", VertexPositionColorTexture.VertexFormat,    new string[] { "VCOLOR" },  new string[] { "LIT", "EMIS", "SPEC", "DIFF", "VCOLOR" }),
+            new ShaderTechnique("LESDVT",   "vsStandardMaterial", "psStandardMaterial", VertexPositionColorTexture.VertexFormat,    new string[] { "VCOLOR" },  new string[] { "LIT", "EMIS", "SPEC", "DIFF", "VCOLOR", "ATEST" }),
+            new ShaderTechnique("LED",      "vsStandardMaterial", "psStandardMaterial", VertexPositionTexture.VertexFormat,         null,                       new string[] { "LIT", "EMIS", "DIFF" }),
+            new ShaderTechnique("LEDV",     "vsStandardMaterial", "psStandardMaterial", VertexPositionColorTexture.VertexFormat,    new string[] { "VCOLOR" },  new string[] { "LIT", "EMIS", "DIFF", "VCOLOR" }),
+            new ShaderTechnique("LEDVT",    "vsStandardMaterial", "psStandardMaterial", VertexPositionColorTexture.VertexFormat,    new string[] { "VCOLOR" },  new string[] { "LIT", "EMIS", "DIFF", "VCOLOR", "ATEST" }),
+            new ShaderTechnique("LEV",      "vsStandardMaterial", "psStandardMaterial", VertexPositionColorTexture.VertexFormat,    new string[] { "VCOLOR" },  new string[] { "LIT", "EMIS", "VCOLOR" }),
+            new ShaderTechnique("LEVT",     "vsStandardMaterial", "psStandardMaterial", VertexPositionColorTexture.VertexFormat,    new string[] { "VCOLOR" },  new string[] { "LIT", "EMIS", "VCOLOR", "ATEST" }),
+            new ShaderTechnique("LET",      "vsStandardMaterial", "psStandardMaterial", VertexPositionTexture.VertexFormat,         null,                       new string[] { "LIT", "EMIS", "ATEST" }),
+            new ShaderTechnique("LS",       "vsStandardMaterial", "psStandardMaterial", VertexPositionTexture.VertexFormat,         null,                       new string[] { "LIT", "SPEC" }),
+            new ShaderTechnique("LSD",      "vsStandardMaterial", "psStandardMaterial", VertexPositionTexture.VertexFormat,         null,                       new string[] { "LIT", "SPEC", "DIFF" }),
+            new ShaderTechnique("LSDV",     "vsStandardMaterial", "psStandardMaterial", VertexPositionColorTexture.VertexFormat,    new string[] { "VCOLOR" },  new string[] { "LIT", "SPEC", "DIFF", "VCOLOR" }),
+            new ShaderTechnique("LSDVT",    "vsStandardMaterial", "psStandardMaterial", VertexPositionColorTexture.VertexFormat,    new string[] { "VCOLOR" },  new string[] { "LIT", "SPEC", "DIFF", "VCOLOR", "ATEST" }),
+            new ShaderTechnique("LSV",      "vsStandardMaterial", "psStandardMaterial", VertexPositionColorTexture.VertexFormat,    new string[] { "VCOLOR" },  new string[] { "LIT", "SPEC", "VCOLOR" }),
+            new ShaderTechnique("LSVT",     "vsStandardMaterial", "psStandardMaterial", VertexPositionColorTexture.VertexFormat,    new string[] { "VCOLOR" },  new string[] { "LIT", "SPEC", "VCOLOR", "ATEST" }),
+            new ShaderTechnique("LST",      "vsStandardMaterial", "psStandardMaterial", VertexPositionTexture.VertexFormat,         null,                       new string[] { "LIT", "SPEC", "ATEST" }),
+            new ShaderTechnique("LD",       "vsStandardMaterial", "psStandardMaterial", VertexPositionTexture.VertexFormat,         null,                       new string[] { "LIT", "DIFF" }),
+            new ShaderTechnique("LDV",      "vsStandardMaterial", "psStandardMaterial", VertexPositionColorTexture.VertexFormat,    new string[] { "VCOLOR" },  new string[] { "LIT", "DIFF", "VCOLOR" }),
+            new ShaderTechnique("LDVT",     "vsStandardMaterial", "psStandardMaterial", VertexPositionColorTexture.VertexFormat,    new string[] { "VCOLOR" },  new string[] { "LIT", "DIFF", "VCOLOR", "ATEST" }),
+            new ShaderTechnique("LDT",      "vsStandardMaterial", "psStandardMaterial", VertexPositionTexture.VertexFormat,         null,                       new string[] { "LIT", "DIFF", "ATEST" }),
+            new ShaderTechnique("LV",       "vsStandardMaterial", "psStandardMaterial", VertexPositionColorTexture.VertexFormat,    new string[] { "VCOLOR" },  new string[] { "LIT", "VCOLOR" }),
+            new ShaderTechnique("LVT",      "vsStandardMaterial", "psStandardMaterial", VertexPositionColorTexture.VertexFormat,    new string[] { "VCOLOR" },  new string[] { "LIT", "VCOLOR", "ATEST" }),
+            new ShaderTechnique("LT",       "vsStandardMaterial", "psStandardMaterial", VertexPositionTexture.VertexFormat,         null,                       new string[] { "LIT", "ATEST" }),
+
+            new ShaderTechnique("A",        "vsStandardMaterial", "psStandardMaterial", VertexPositionTexture.VertexFormat,         null,                       new string[] { "AMBI" }),
+            new ShaderTechnique("AE",       "vsStandardMaterial", "psStandardMaterial", VertexPositionTexture.VertexFormat,         null,                       new string[] { "AMBI", "EMIS" }),
+            new ShaderTechnique("AES",      "vsStandardMaterial", "psStandardMaterial", VertexPositionTexture.VertexFormat,         null,                       new string[] { "AMBI", "EMIS", "SPEC" }),
+            new ShaderTechnique("AESD",     "vsStandardMaterial", "psStandardMaterial", VertexPositionTexture.VertexFormat,         null,                       new string[] { "AMBI", "EMIS", "SPEC", "DIFF" }),
+            new ShaderTechnique("AESDV",    "vsStandardMaterial", "psStandardMaterial", VertexPositionColorTexture.VertexFormat,    new string[] { "VCOLOR" },  new string[] { "AMBI", "EMIS", "SPEC", "DIFF", "VCOLOR" }),
+            new ShaderTechnique("AESDVT",   "vsStandardMaterial", "psStandardMaterial", VertexPositionColorTexture.VertexFormat,    new string[] { "VCOLOR" },  new string[] { "AMBI", "EMIS", "SPEC", "DIFF", "VCOLOR", "ATEST" }),
+            new ShaderTechnique("AS",       "vsStandardMaterial", "psStandardMaterial", VertexPositionTexture.VertexFormat,         null,                       new string[] { "AMBI", "SPEC" }),
+            new ShaderTechnique("ASD",      "vsStandardMaterial", "psStandardMaterial", VertexPositionTexture.VertexFormat,         null,                       new string[] { "AMBI", "SPEC", "DIFF" }),
+            new ShaderTechnique("ASDV",     "vsStandardMaterial", "psStandardMaterial", VertexPositionColorTexture.VertexFormat,    new string[] { "VCOLOR" },  new string[] { "AMBI", "SPEC", "DIFF", "VCOLOR" }),
+            new ShaderTechnique("ASDVT",    "vsStandardMaterial", "psStandardMaterial", VertexPositionColorTexture.VertexFormat,    new string[] { "VCOLOR" },  new string[] { "AMBI", "SPEC", "DIFF", "VCOLOR", "ATEST" }),
+            new ShaderTechnique("AD",       "vsStandardMaterial", "psStandardMaterial", VertexPositionTexture.VertexFormat,         null,                       new string[] { "AMBI", "DIFF" }),
+            new ShaderTechnique("ADV",      "vsStandardMaterial", "psStandardMaterial", VertexPositionColorTexture.VertexFormat,    new string[] { "VCOLOR" },  new string[] { "AMBI", "DIFF", "VCOLOR" }),
+            new ShaderTechnique("ADVT",     "vsStandardMaterial", "psStandardMaterial", VertexPositionColorTexture.VertexFormat,    new string[] { "VCOLOR" },  new string[] { "AMBI", "DIFF", "VCOLOR", "ATEST" }),
+            new ShaderTechnique("AV",       "vsStandardMaterial", "psStandardMaterial", VertexPositionColorTexture.VertexFormat,    new string[] { "VCOLOR" },  new string[] { "AMBI", "VCOLOR" }),
+            new ShaderTechnique("AVT",      "vsStandardMaterial", "psStandardMaterial", VertexPositionColorTexture.VertexFormat,    new string[] { "VCOLOR" },  new string[] { "AMBI", "VCOLOR", "ATEST" }),
+            new ShaderTechnique("AT",       "vsStandardMaterial", "psStandardMaterial", VertexPositionTexture.VertexFormat,         null,                       new string[] { "AMBI", "ATEST" }),
+            new ShaderTechnique("E",        "vsStandardMaterial", "psStandardMaterial", VertexPositionTexture.VertexFormat,         null,                       new string[] { "EMIS" }),
+            new ShaderTechnique("ES",       "vsStandardMaterial", "psStandardMaterial", VertexPositionTexture.VertexFormat,         null,                       new string[] { "EMIS", "SPEC" }),
+            new ShaderTechnique("ESD",      "vsStandardMaterial", "psStandardMaterial", VertexPositionTexture.VertexFormat,         null,                       new string[] { "EMIS", "SPEC", "DIFF" }),
+            new ShaderTechnique("ESDV",     "vsStandardMaterial", "psStandardMaterial", VertexPositionColorTexture.VertexFormat,    new string[] { "VCOLOR" },  new string[] { "EMIS", "SPEC", "DIFF", "VCOLOR" }),
+            new ShaderTechnique("ESDVT",    "vsStandardMaterial", "psStandardMaterial", VertexPositionColorTexture.VertexFormat,    new string[] { "VCOLOR" },  new string[] { "EMIS", "SPEC", "DIFF", "VCOLOR", "ATEST" }),
+            new ShaderTechnique("ED",       "vsStandardMaterial", "psStandardMaterial", VertexPositionTexture.VertexFormat,         null,                       new string[] { "EMIS", "DIFF" }),
+            new ShaderTechnique("EDV",      "vsStandardMaterial", "psStandardMaterial", VertexPositionColorTexture.VertexFormat,    new string[] { "VCOLOR" },  new string[] { "EMIS", "DIFF", "VCOLOR" }),
+            new ShaderTechnique("EDVT",     "vsStandardMaterial", "psStandardMaterial", VertexPositionColorTexture.VertexFormat,    new string[] { "VCOLOR" },  new string[] { "EMIS", "DIFF", "VCOLOR", "ATEST" }),
+            new ShaderTechnique("EV",       "vsStandardMaterial", "psStandardMaterial", VertexPositionColorTexture.VertexFormat,    new string[] { "VCOLOR" },  new string[] { "EMIS", "VCOLOR" }),
+            new ShaderTechnique("EVT",      "vsStandardMaterial", "psStandardMaterial", VertexPositionColorTexture.VertexFormat,    new string[] { "VCOLOR" },  new string[] { "EMIS", "VCOLOR", "ATEST" }),
+            new ShaderTechnique("ET",       "vsStandardMaterial", "psStandardMaterial", VertexPositionTexture.VertexFormat,         null,                       new string[] { "EMIS", "ATEST" }),
+            new ShaderTechnique("S",        "vsStandardMaterial", "psStandardMaterial", VertexPositionTexture.VertexFormat,         null,                       new string[] { "SPEC" }),
+            new ShaderTechnique("SD",       "vsStandardMaterial", "psStandardMaterial", VertexPositionTexture.VertexFormat,         null,                       new string[] { "SPEC", "DIFF" }),
+            new ShaderTechnique("SDV",      "vsStandardMaterial", "psStandardMaterial", VertexPositionColorTexture.VertexFormat,    new string[] { "VCOLOR" },  new string[] { "SPEC", "DIFF", "VCOLOR" }),
+            new ShaderTechnique("SDVT",     "vsStandardMaterial", "psStandardMaterial", VertexPositionColorTexture.VertexFormat,    new string[] { "VCOLOR" },  new string[] { "SPEC", "DIFF", "VCOLOR", "ATEST" }),
+            new ShaderTechnique("SV",       "vsStandardMaterial", "psStandardMaterial", VertexPositionColorTexture.VertexFormat,    new string[] { "VCOLOR" },  new string[] { "SPEC", "VCOLOR" }),
+            new ShaderTechnique("SVT",      "vsStandardMaterial", "psStandardMaterial", VertexPositionColorTexture.VertexFormat,    new string[] { "VCOLOR" },  new string[] { "SPEC", "VCOLOR", "ATEST" }),
+            new ShaderTechnique("ST",       "vsStandardMaterial", "psStandardMaterial", VertexPositionTexture.VertexFormat,         null,                       new string[] { "SPEC", "ATEST" }),
+            new ShaderTechnique("D",        "vsStandardMaterial", "psStandardMaterial", VertexPositionTexture.VertexFormat,         null,                       new string[] { "DIFF" }),
+            new ShaderTechnique("DV",       "vsStandardMaterial", "psStandardMaterial", VertexPositionColorTexture.VertexFormat,    new string[] { "VCOLOR" },  new string[] { "DIFF", "VCOLOR" }),
+            new ShaderTechnique("DVT",      "vsStandardMaterial", "psStandardMaterial", VertexPositionColorTexture.VertexFormat,    new string[] { "VCOLOR" },  new string[] { "DIFF", "VCOLOR", "ATEST" }),
+            new ShaderTechnique("DT",       "vsStandardMaterial", "psStandardMaterial", VertexPositionTexture.VertexFormat,         null,                       new string[] { "DIFF", "ATEST" }),
+            new ShaderTechnique("V",        "vsStandardMaterial", "psStandardMaterial", VertexPositionColorTexture.VertexFormat,    new string[] { "VCOLOR" },  new string[] { "VCOLOR" }),
+            new ShaderTechnique("VT",       "vsStandardMaterial", "psStandardMaterial", VertexPositionColorTexture.VertexFormat,    new string[] { "VCOLOR" },  new string[] { "VCOLOR", "ATEST" }),
+            new ShaderTechnique("T",        "vsStandardMaterial", "psStandardMaterial", VertexPositionTexture.VertexFormat,         null,                       new string[] { "ATEST" }),
 
             // GBuffer pass
-            new ShaderTechnique("G",   "LPPGBuffer", "vsGBuffer", "LPPGBuffer", "psGBuffer", VertexPositionNormal.VertexFormat,                null,                       null),
-            new ShaderTechnique("GN",  "LPPGBuffer", "vsGBuffer", "LPPGBuffer", "psGBuffer", VertexPositionNormalTangentTexture.VertexFormat,  new string[] { "NORMAL" },  new string[] { "NORMAL" }),
-            new ShaderTechnique("GD",  "LPPGBuffer", "vsGBuffer", "LPPGBuffer", "psGBuffer", VertexPositionNormal.VertexFormat,                null,                       new string[] { "DEPTH" }),
-            new ShaderTechnique("GDN", "LPPGBuffer", "vsGBuffer", "LPPGBuffer", "psGBuffer", VertexPositionNormalTangentTexture.VertexFormat,  new string[] { "NORMAL" },  new string[] { "NORMAL", "DEPTH" }),
-            new ShaderTechnique("GR",  "LPPGBuffer", "vsGBuffer", "LPPGBuffer", "psGBuffer", VertexPositionNormal.VertexFormat,                null,                       new string[] { "MRT" }),
-            new ShaderTechnique("GRN", "LPPGBuffer", "vsGBuffer", "LPPGBuffer", "psGBuffer", VertexPositionNormalTangentTexture.VertexFormat,  new string[] { "NORMAL" },  new string[] { "NORMAL", "MRT" }),
+            new ShaderTechnique("G",        "LPPGBuffer", "vsGBuffer", "LPPGBuffer", "psGBuffer", VertexPositionNormal.VertexFormat,                null,                       null),
+            new ShaderTechnique("GN",       "LPPGBuffer", "vsGBuffer", "LPPGBuffer", "psGBuffer", VertexPositionNormalTangentTexture.VertexFormat,  new string[] { "NORMAL" },  new string[] { "NORMAL" }),
+            new ShaderTechnique("GD",       "LPPGBuffer", "vsGBuffer", "LPPGBuffer", "psGBuffer", VertexPositionNormal.VertexFormat,                null,                       new string[] { "DEPTH" }),
+            new ShaderTechnique("GDN",      "LPPGBuffer", "vsGBuffer", "LPPGBuffer", "psGBuffer", VertexPositionNormalTangentTexture.VertexFormat,  new string[] { "NORMAL" },  new string[] { "NORMAL", "DEPTH" }),
+            new ShaderTechnique("GR",       "LPPGBuffer", "vsGBuffer", "LPPGBuffer", "psGBuffer", VertexPositionNormal.VertexFormat,                null,                       new string[] { "MRT" }),
+            new ShaderTechnique("GRN",      "LPPGBuffer", "vsGBuffer", "LPPGBuffer", "psGBuffer", VertexPositionNormalTangentTexture.VertexFormat,  new string[] { "NORMAL" },  new string[] { "NORMAL", "MRT" }),
+
+#if ANDROID
+            // Video texture
+            new ShaderTechnique("Video", "vsStandardMaterialVideo", "psStandardMaterialVideo ", VertexPositionTexture.VertexFormat, null, null),  
+#endif
         };
 
         #region Struct
@@ -502,7 +502,6 @@ namespace WaveEngine.Materials
         /// <value>
         /// The diffuse.
         /// </value>
-        /// <exception cref="System.NullReferenceException">Diffuse texture cannot be null.</exception>
         [DontRenderProperty]
         public Texture Diffuse
         {
@@ -513,11 +512,6 @@ namespace WaveEngine.Materials
 
             set
             {
-                if (value == null)
-                {
-                    throw new NullReferenceException("Diffuse texture cannot be null.");
-                }
-
                 this.diffuse = value;
             }
         }
@@ -528,7 +522,6 @@ namespace WaveEngine.Materials
         /// <value>
         /// The emissive.
         /// </value>
-        /// <exception cref="System.NullReferenceException">Emissive texture cannot be null.</exception>
         [DontRenderProperty]
         public Texture Emissive
         {
@@ -539,11 +532,6 @@ namespace WaveEngine.Materials
 
             set
             {
-                if (value == null)
-                {
-                    throw new NullReferenceException("Emissive texture cannot be null.");
-                }
-
                 this.emissive = value;
             }
         }
@@ -554,7 +542,6 @@ namespace WaveEngine.Materials
         /// <value>
         /// The specular.
         /// </value>
-        /// <exception cref="System.NullReferenceException">Specular texture cannot be null.</exception>
         [DontRenderProperty]
         public Texture Specular
         {
@@ -565,11 +552,6 @@ namespace WaveEngine.Materials
 
             set
             {
-                if (value == null)
-                {
-                    throw new NullReferenceException("Specular texture cannot be null.");
-                }
-
                 this.specular = value;
             }
         }
@@ -580,7 +562,6 @@ namespace WaveEngine.Materials
         /// <value>
         /// The ambient.
         /// </value>
-        /// <exception cref="System.NullReferenceException">Diffuse texture cannot be null.</exception>
         [DontRenderProperty]
         public TextureCube Ambient
         {
@@ -591,11 +572,6 @@ namespace WaveEngine.Materials
 
             set
             {
-                if (value == null)
-                {
-                    throw new NullReferenceException("Ambient texture cannot be null.");
-                }
-
                 this.ambient = value;
             }
         }
@@ -626,7 +602,6 @@ namespace WaveEngine.Materials
         /// <value>
         /// The normal.
         /// </value>
-        /// <exception cref="System.NullReferenceException">Normal texture cannot be null.</exception>
         [DontRenderProperty]
         public Texture Normal
         {
@@ -637,14 +612,20 @@ namespace WaveEngine.Materials
 
             set
             {
-                if (value == null)
-                {
-                    throw new NullReferenceException("Normal texture cannot be null.");
-                }
-
                 this.normal = value;
             }
         }
+
+#if ANDROID
+        /// <summary>
+        /// Gets the diffuse video texture
+        /// </summary>
+        [DontRenderProperty]
+        public VideoTexture VideoTexture
+        {
+            get { return this.Diffuse as VideoTexture; }
+        }
+#endif
 
         #region techniques array
 
@@ -744,12 +725,14 @@ namespace WaveEngine.Materials
                     "GDN",
                     "GR",
                     "GRN",
+
+                    "Video",
                 };
 
         #endregion
 
         /// <summary>
-        /// Gets or sets the current technique.
+        /// Gets the current technique.
         /// </summary>
         /// <value>
         /// The current technique.
@@ -762,19 +745,20 @@ namespace WaveEngine.Materials
                 string technique = string.Empty;
                 int index = 0;
 
-                ////return "Simple";
-
                 if (this.DeferredLightingPass == DeferredLightingPass.GBufferPass)
                 {
                     technique += "G";
 
-                    if (this.graphicsDevice.RenderTargets.IsDepthAsTextureSupported)
+                    if (this.graphicsDevice != null)
                     {
-                        technique += "D";
-                    }
-                    else if (this.graphicsDevice.RenderTargets.IsMRTsupported)
-                    {
-                        technique += "R";
+                        if (this.graphicsDevice.RenderTargets.IsDepthAsTextureSupported)
+                        {
+                            technique += "D";
+                        }
+                        else if (this.graphicsDevice.RenderTargets.IsMRTsupported)
+                        {
+                            technique += "R";
+                        }
                     }
 
                     if (this.normal != null)
@@ -820,6 +804,13 @@ namespace WaveEngine.Materials
                     }
                 }
 
+                #if ANDROID
+                if (this.VideoTexture != null)
+                {
+                    technique = "Video";
+                }
+                #endif
+
                 for (int i = 0; i < s.Length; i++)
                 {
                     if (s[i] == technique)
@@ -829,7 +820,24 @@ namespace WaveEngine.Materials
                     }
                 }
 
-                return techniques[index].Name;
+                ShaderTechnique seletedTechnique = techniques[index];
+
+                // Lazy initialization
+                if (!seletedTechnique.IsInitialized)
+                {
+                    if (this.DeferredLightingPass == DeferredLightingPass.GBufferPass)
+                    {
+                        this.Parameters = this.gbufferShaderParameters;
+                    }
+                    else
+                    {
+                        this.Parameters = this.shaderParameters;
+                    }
+
+                    seletedTechnique.Initialize(this);
+                }
+
+                return seletedTechnique.Name;
             }
         }
         #endregion
@@ -917,20 +925,9 @@ namespace WaveEngine.Materials
             this.shaderParameters = new MaterialParameters();
             this.gbufferShaderParameters = new GBufferMaterialParameters();
 
-            if (!techniqueInitialized)
-            {
-                // Initialize Forward techniques
-                this.Parameters = this.shaderParameters;
-                var techniqueList = techniques.Where(t => !t.Name.StartsWith("G")).ToArray();
-                this.InitializeTechniques(techniqueList);
-
-                // Initialize GBuffer techniques
-                this.Parameters = this.gbufferShaderParameters;
-                techniqueList = techniques.Where(t => t.Name.StartsWith("G")).ToArray();
-                this.InitializeTechniques(techniqueList);
-
-                techniqueInitialized = true;
-            }
+            // ToDo: You need to initialize at least one technique
+            this.Parameters = this.shaderParameters;
+            techniques[0].Initialize(this);
         }
 
         /// <summary>

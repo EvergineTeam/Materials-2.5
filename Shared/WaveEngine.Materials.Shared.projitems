@@ -18,6 +18,8 @@
   <ItemGroup>
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Shaders\GLSL\LPPGBuffer\psGBuffer.frag" />
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Shaders\GLSL\LPPGBuffer\vsGBuffer.vert" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Shaders\GLSL\StandardMaterial\psStandardMaterialVideo .frag" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Shaders\GLSL\StandardMaterial\vsStandardMaterialVideo.vert" />
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Shaders\HLSL\LPPGBuffer\psGBuffer.fxo" />
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Shaders\HLSL\LPPGBuffer\psGBuffer_DEPTH.fxo" />
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Shaders\HLSL\LPPGBuffer\psGBuffer_MRT.fxo" />
@@ -60,6 +62,8 @@
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Shaders\HLSL\EnvironmentMaterial\vsEnvironmentMaterial_LIT_DIFF.fxo" />
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Shaders\HLSL\EnvironmentMaterial\vsEnvironmentMaterial_DIFF_NORMAL.fxo" />
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Shaders\HLSL\EnvironmentMaterial\vsEnvironmentMaterial_NORMAL.fxo" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Shaders\HLSL\DualMaterial\psDualMaterial_FIRST_SECON_LMAP.fxo" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Shaders\HLSL\DualMaterial\psDualMaterial_LIT_FIRST_SECON_LMAP.fxo" />
     <None Include="$(MSBuildThisFileDirectory)Shaders\HLSL\LPPGBuffer\CompileGBufferShaders.cmd" />
     <None Include="$(MSBuildThisFileDirectory)Shaders\HLSL\LPPGBuffer\LPPGBuffer.fx" />
     <None Include="$(MSBuildThisFileDirectory)Shaders\HLSL\SkyboxMaterial\SkyboxEffect.fx" />

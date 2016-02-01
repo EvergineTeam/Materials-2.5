@@ -28,12 +28,17 @@ namespace WaveEngine.Materials
     public enum DualTextureMode
     {
         /// <summary>
-        /// Multiplicative blending.
+        /// Lightmap blending (Difusse1 * (2 * Difusse2)).
+        /// </summary>
+        Lightmap,
+
+        /// <summary>
+        /// Multiplicative blending (Difusse1 * Difusse2).. 
         /// </summary>
         Multiplicative,
 
         /// <summary>
-        /// Additive blending.
+        /// Additive blending. (Difusse1 + Difusse2).
         /// </summary>
         Additive,
 
@@ -49,11 +54,6 @@ namespace WaveEngine.Materials
     [DataContract(Namespace = "WaveEngine.Materials")]
     public class DualMaterial : DeferredMaterial
     {
-        /// <summary>
-        /// Technique initialized
-        /// </summary>
-        private static bool techniqueInitialized = false;
-
         /// <summary>
         /// The diffuse color
         /// </summary>
@@ -111,6 +111,7 @@ namespace WaveEngine.Materials
             new ShaderTechnique("FSM",  "vsDualMaterial", "psDualMaterial", VertexPositionDualTexture.VertexFormat, null, new string[] { "FIRST", "SECON", "MUL" }),
             new ShaderTechnique("FSA",  "vsDualMaterial", "psDualMaterial", VertexPositionDualTexture.VertexFormat, null, new string[] { "FIRST", "SECON", "ADD" }),
             new ShaderTechnique("FSK",  "vsDualMaterial", "psDualMaterial", VertexPositionDualTexture.VertexFormat, null, new string[] { "FIRST", "SECON", "MSK" }),
+            new ShaderTechnique("FSI",  "vsDualMaterial", "psDualMaterial", VertexPositionDualTexture.VertexFormat, null, new string[] { "FIRST", "SECON", "LMAP" }),
 
             new ShaderTechnique("L",    "vsDualMaterial", "psDualMaterial", VertexPositionDualTexture.VertexFormat, null, new string[] { "LIT" }),
             new ShaderTechnique("LF",   "vsDualMaterial", "psDualMaterial", VertexPositionDualTexture.VertexFormat, null, new string[] { "LIT", "FIRST" }),
@@ -118,6 +119,7 @@ namespace WaveEngine.Materials
             new ShaderTechnique("LFSM", "vsDualMaterial", "psDualMaterial", VertexPositionDualTexture.VertexFormat, null, new string[] { "LIT", "FIRST", "SECON", "MUL" }),
             new ShaderTechnique("LFSA", "vsDualMaterial", "psDualMaterial", VertexPositionDualTexture.VertexFormat, null, new string[] { "LIT", "FIRST", "SECON", "ADD" }),
             new ShaderTechnique("LFSK", "vsDualMaterial", "psDualMaterial", VertexPositionDualTexture.VertexFormat, null, new string[] { "LIT", "FIRST", "SECON", "MSK" }),
+            new ShaderTechnique("LFSI", "vsDualMaterial", "psDualMaterial", VertexPositionDualTexture.VertexFormat, null, new string[] { "LIT", "FIRST", "SECON", "LMAP" }),
 
             // GBuffer pass
             new ShaderTechnique("G",    "LPPGBuffer", "vsGBuffer", "LPPGBuffer", "psGBuffer", VertexPositionNormal.VertexFormat,                null,                       null),
@@ -417,13 +419,15 @@ namespace WaveEngine.Materials
                     "S",   
                     "FSM", 
                     "FSA", 
-                    "FSK", 
+                    "FSK",
+                    "FSI",
                     "L",   
                     "LF",  
                     "LS",  
                     "LFSM",
                     "LFSA",
                     "LFSK",
+                    "LFSI",
 
                     "G",   
                     "GN",  
@@ -459,13 +463,16 @@ namespace WaveEngine.Materials
                 {
                     technique += "G";
 
-                    if (this.graphicsDevice.RenderTargets.IsDepthAsTextureSupported)
+                    if (this.graphicsDevice != null)
                     {
-                        technique += "D";
-                    }
-                    else if (this.graphicsDevice.RenderTargets.IsMRTsupported)
-                    {
-                        technique += "R";
+                        if (this.graphicsDevice.RenderTargets.IsDepthAsTextureSupported)
+                        {
+                            technique += "D";
+                        }
+                        else if (this.graphicsDevice.RenderTargets.IsMRTsupported)
+                        {
+                            technique += "R";
+                        }
                     }
 
                     if (this.normal != null)
@@ -503,6 +510,9 @@ namespace WaveEngine.Materials
                             case DualTextureMode.Mask:
                                 technique += "K";
                                 break;
+                            case DualTextureMode.Lightmap:
+                                technique += "I";
+                                break;
                         }
                     }
 
@@ -521,7 +531,24 @@ namespace WaveEngine.Materials
                     }
                 }
 
-                return techniques[index].Name;
+                ShaderTechnique seletedTechnique = techniques[index];
+
+                // Lazy initialization
+                if (!seletedTechnique.IsInitialized)
+                {
+                    if (this.DeferredLightingPass == DeferredLightingPass.GBufferPass)
+                    {
+                        this.Parameters = this.gbufferShaderParameters;
+                    }
+                    else
+                    {
+                        this.Parameters = this.shaderParameters;
+                    }
+
+                    seletedTechnique.Initialize(this);
+                }
+
+                return seletedTechnique.Name;
             }
         }
         #endregion
@@ -599,20 +626,9 @@ namespace WaveEngine.Materials
             this.shaderParameters = new MaterialParameters();
             this.gbufferShaderParameters = new GBufferMaterialParameters();
 
-            if (!techniqueInitialized)
-            {
-                // Initialize Forward techniques
-                this.Parameters = this.shaderParameters;
-                var techniqueList = techniques.Where(t => !t.Name.StartsWith("G")).ToArray();
-                this.InitializeTechniques(techniqueList);
-
-                // Initialize GBuffer techniques
-                this.Parameters = this.gbufferShaderParameters;
-                techniqueList = techniques.Where(t => t.Name.StartsWith("G")).ToArray();
-                this.InitializeTechniques(techniqueList);
-
-                techniqueInitialized = true;
-            }
+            // ToDo: You need to initialize at least one technique
+            this.Parameters = this.shaderParameters;
+            techniques[0].Initialize(this);
         }
 
         /// <summary>
