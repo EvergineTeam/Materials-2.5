@@ -67,6 +67,8 @@
     <None Include="$(MSBuildThisFileDirectory)Shaders\HLSL\LPPGBuffer\CompileGBufferShaders.cmd" />
     <None Include="$(MSBuildThisFileDirectory)Shaders\HLSL\LPPGBuffer\LPPGBuffer.fx" />
     <None Include="$(MSBuildThisFileDirectory)Shaders\HLSL\SkyboxMaterial\SkyboxEffect.fx" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Shaders\HLSL\StandardMaterial\vsStandardMaterial_VCOLOR_VTEX.fxo" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Shaders\HLSL\StandardMaterial\vsStandardMaterial_VTEX.fxo" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Shaders\HLSL\SkyboxMaterial\SkyboxEffectpsSkybox.fxo" />

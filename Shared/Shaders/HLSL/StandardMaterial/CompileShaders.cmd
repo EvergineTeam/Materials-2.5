@@ -8,6 +8,8 @@ set fxcpath="C:\Program Files (x86)\Windows Kits\8.1\bin\x86\fxc.exe"
 
 call :CompileShader vs vsMaterial
 call :CompileShader vs vsMaterial VCOLOR
+call :CompileShader vs vsMaterial VTEX
+call :CompileShader vs vsMaterial VCOLOR VTEX
 call :CompileShader ps psMaterial
 
 call :CompileShader ps psMaterial LIT

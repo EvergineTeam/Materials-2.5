@@ -1,7 +1,7 @@
 //-----------------------------------------------------------------------------
 // BasicMaterial.fx
 //
-// Copyright © 2015 Wave Engine S.L. All rights reserved.
+// Copyright © 2016 Wave Engine S.L. All rights reserved.
 // Use is subject to license terms.
 //-----------------------------------------------------------------------------
 
@@ -25,9 +25,9 @@ cbuffer Matrices : register(b0)
 cbuffer Parameters : register(b1)
 {
 	float3		CameraPosition			: packoffset(c0.x);
-	float		ReferenceAlpha			: packoffset(c0.w);
+	float		ReferenceAlpha : packoffset(c0.w);
 	float3		DiffuseColor			: packoffset(c1.x);
-	float		Alpha					: packoffset(c1.w);
+	float		Alpha : packoffset(c1.w);
 	float3		AmbientColor			: packoffset(c2.x);
 	float3		EmissiveColor			: packoffset(c3.x);
 	float2		TextureOffset			: packoffset(c4.x);
@@ -67,7 +67,9 @@ sampler_state
 struct VS_IN
 {
 	float4 Position		: POSITION;
+#if VTEX
 	float2 TexCoord		: TEXCOORD0;
+#endif
 
 #if VCOLOR
 	float3 Color		: COLOR0;
@@ -92,11 +94,13 @@ VS_OUT vsMaterial(VS_IN input)
 	output.Position = mul(input.Position, WorldViewProj);
 	output.PositionCS = output.Position;
 
+#if VTEX
+	output.TexCoord = input.TexCoord + TextureOffset;
+#endif
+
 #if VCOLOR
 	output.Color = input.Color;
 #endif
-
-	output.TexCoord = input.TexCoord + TextureOffset;
 	return output;
 }
 
@@ -111,18 +115,18 @@ float4 psMaterial(VS_OUT input) : SV_Target0
 
 #if LIT
 	float4 lighting = LightingTexture.Sample(LightingTextureSampler, screenPosition);
-	DecodeLightDiffuseSpecular(lighting, diffuseIntensity, specularIntensity);	
+	DecodeLightDiffuseSpecular(lighting, diffuseIntensity, specularIntensity);
 #else
 	diffuseIntensity = float3(1, 1, 1);
 #endif
-	
+
 #if AMBI
 	float glossiness;
 	float3 normal;
 	float4 gbuffer = Gbuffer.Sample(GbufferSampler, screenPosition);
 	DecodeNormalGlossiness(gbuffer, normal, glossiness);
 	float3 ambient = CubeTexture.Sample(TextureCubeSampler, normal).xyz;
-	
+
 	#if LIT
 		diffuseIntensity += ambient;
 	#else
@@ -140,7 +144,7 @@ diffuseIntensity += AmbientColor;
 #if SPEC
 	float specular = Specular.Sample(TextureSampler, input.TexCoord).x;
 	specular *= specularIntensity;
-	intensity = diffuseIntensity + (specular.xxx );
+	intensity = diffuseIntensity + (specular.xxx);
 #else
 	intensity = diffuseIntensity + (specularIntensity.xxx);
 #endif
@@ -148,7 +152,7 @@ diffuseIntensity += AmbientColor;
 #if DIFF
 	float4 albedo = Diffuse.Sample(TextureSampler, input.TexCoord);
 	alphaMask = albedo.a;
-		
+
 	#if VCOLOR
 		color += intensity * albedo.xyz * input.Color;
 	#else
