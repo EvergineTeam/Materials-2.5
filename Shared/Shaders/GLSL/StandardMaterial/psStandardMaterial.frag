@@ -45,7 +45,7 @@ uniform sampler2D GBufferTexture;
 varying vec2 outTexCoord;
 varying vec4 outPositionCS;
 #ifdef VCOLOR
-varying vec3 outColor;
+varying vec4 outColor;
 #endif
 
 // HELPERS
@@ -119,13 +119,15 @@ diffuseIntensity += AmbientColor;
 	alphaMask = albedo.a;
 		
 	#ifdef VCOLOR
-		color += intensity * albedo.xyz * outColor;
+		color += intensity * albedo.xyz * outColor.xyz;
+		alphaMask *= outColor.a;
 	#else
 		color += intensity * albedo.xyz * DiffuseColor;
 	#endif
 #else
 	#ifdef VCOLOR
-		color += intensity * DiffuseColor * outColor;
+		color += intensity * DiffuseColor * outColor.xyz;
+		alphaMask *= outColor.a;
 	#else
 		color += intensity * DiffuseColor;
 	#endif

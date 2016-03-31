@@ -16,7 +16,7 @@ attribute vec4 Position0;
 attribute vec2 TextureCoordinate0;
 #endif
 #ifdef VCOLOR
-attribute vec3 Color0;
+attribute vec4 Color0;
 #endif
 
 
@@ -24,7 +24,7 @@ attribute vec3 Color0;
 varying vec2 outTexCoord;
 varying vec4 outPositionCS;
 #ifdef VCOLOR
-varying vec3 outColor;
+varying vec4 outColor;
 #endif
 
 void main(void)

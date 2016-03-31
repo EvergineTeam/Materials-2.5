@@ -72,7 +72,7 @@ struct VS_IN
 #endif
 
 #if VCOLOR
-	float3 Color		: COLOR0;
+	float4 Color		: COLOR0;
 #endif
 };
 
@@ -83,7 +83,7 @@ struct VS_OUT
 	float2 TexCoord		: TEXCOORD1;
 
 #if VCOLOR
-	float3 Color		: COLOR0;
+	float4 Color		: COLOR0;
 #endif
 };
 
@@ -154,13 +154,15 @@ diffuseIntensity += AmbientColor;
 	alphaMask = albedo.a;
 
 	#if VCOLOR
-		color += intensity * albedo.xyz * input.Color;
+		color += intensity * albedo.xyz * input.Color.xyz;
+		alphaMask *= input.Color.a;
 	#else
 		color += intensity * albedo.xyz * DiffuseColor;
 	#endif
 #else
 	#if VCOLOR
-		color += intensity * DiffuseColor * input.Color;
+		color += intensity * DiffuseColor * input.Color.xyz;
+		alphaMask *= input.Color.a;
 	#else
 		color += intensity * DiffuseColor;
 	#endif

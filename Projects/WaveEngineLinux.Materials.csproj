@@ -25,6 +25,7 @@
     <PlatformTarget>x86</PlatformTarget>
     <ConsolePause>false</ConsolePause>
     <Prefer32Bit>false</Prefer32Bit>
+    <DocumentationFile>bin\Debug\WaveEngine.Materials.XML</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
     <DebugType>none</DebugType>
@@ -40,6 +41,14 @@
         <Command type="AfterBuild" command="cp &quot;${TargetFile}&quot; &quot;/usr/lib/WaveEngine/1.0/&quot;" />
       </CustomCommands>
     </CustomCommands>
+    <DocumentationFile>bin\Release\WaveEngine.Materials.XML</DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'NuGet|x86'">
+    <OutputPath>bin\x86\NuGet\</OutputPath>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <DocumentationFile>bin\x86\NuGet\WaveEngine.Materials.XML</DocumentationFile>
   </PropertyGroup>
   <Import Project="..\Shared\WaveEngine.Materials.Shared.projitems" Label="Shared" Condition="Exists('..\Shared\WaveEngine.Materials.Shared.projitems')" />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
