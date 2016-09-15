@@ -69,10 +69,3 @@ echo.
 echo %fxc%
 %fxc% || set error=1
 exit /b
-
-
-call :CompileShader ps psDualTexture
-call :CompileShader ps psDualTexture LIT
-call :CompileShader ps psDualTexture LIT MUL
-call :CompileShader ps psDualTexture LIT ADD
-call :CompileShader ps psDualTexture LIT MSK
