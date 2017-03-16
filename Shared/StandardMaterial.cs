@@ -2,7 +2,7 @@
 //-----------------------------------------------------------------------------
 // StandardMaterial
 //
-// Copyright © 2016 Wave Engine S.L. All rights reserved.
+// Copyright © 2017 Wave Engine S.L. All rights reserved.
 // Use is subject to license terms.
 //-----------------------------------------------------------------------------
 #endregion
@@ -970,19 +970,35 @@ namespace WaveEngine.Materials
         public override void SetParameters(bool cached)
         {
             base.SetParameters(cached);
-
-            Camera camera = this.renderManager.CurrentDrawingCamera;
-
+                     
             if (this.DeferredLightingPass == DeferredLightingPass.ForwardPass)
             {
-                this.shaderParameters.CameraPosition = camera.Position;
+                if (this.renderManager != null)
+                {
+                    Camera camera = this.renderManager.CurrentDrawingCamera;
+
+                    this.shaderParameters.CameraPosition = camera.Position;
+                    this.shaderParameters.TexCoordFix = this.renderManager.GraphicsDevice.RenderTargets.RenderTargetActive ? 1 : -1;
+
+                    if (this.ambient != null)
+                    {
+                        this.graphicsDevice.SetTexture(this.ambient, 3);
+                        this.graphicsDevice.SetTexture(camera.GBufferRT0, 5);
+                    }
+
+                    this.LightingTexture = camera.LightingRT;
+                    if (this.LightingTexture != null)
+                    {
+                        this.graphicsDevice.SetTexture(this.LightingTexture, 4);
+                    }
+                }
+                
                 this.shaderParameters.ReferenceAlpha = this.ReferenceAlpha;
                 this.shaderParameters.DiffuseColor = this.diffuseColor;
                 this.shaderParameters.EmissiveColor = this.emissiveColor;
                 this.shaderParameters.AmbientColor = this.ambientColor;
                 this.shaderParameters.Alpha = this.Alpha;
-                this.shaderParameters.TextureOffset = this.TexcoordOffset;
-                this.shaderParameters.TexCoordFix = this.renderManager.GraphicsDevice.RenderTargets.RenderTargetActive ? 1 : -1;
+                this.shaderParameters.TextureOffset = this.TexcoordOffset;                
 
                 this.Parameters = this.shaderParameters;
 
@@ -999,18 +1015,6 @@ namespace WaveEngine.Materials
                 if (this.specular != null)
                 {
                     this.graphicsDevice.SetTexture(this.specular, 2);
-                }
-
-                if (this.ambient != null)
-                {
-                    this.graphicsDevice.SetTexture(this.ambient, 3);
-                    this.graphicsDevice.SetTexture(camera.GBufferRT0, 5);
-                }
-
-                this.LightingTexture = camera.LightingRT;
-                if (this.LightingTexture != null)
-                {
-                    this.graphicsDevice.SetTexture(this.LightingTexture, 4);
                 }
             }
             else

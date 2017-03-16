@@ -1,7 +1,7 @@
 ﻿//-----------------------------------------------------------------------------
 // vsStandardMaterial.vert
 //
-// Copyright © 2016 Wave Engine S.L. All rights reserved.
+// Copyright © 2017 Wave Engine S.L. All rights reserved.
 // Use is subject to license terms.
 //-----------------------------------------------------------------------------
 
@@ -9,6 +9,7 @@
 
 // Matrices
 uniform mat4	WorldViewProj;
+uniform vec2	TextureOffset;
 
 // Input
 attribute vec4 Position0;
@@ -31,7 +32,7 @@ void main(void)
 {
   outPositionCS = WorldViewProj * Position0;
 #ifdef VTEX
-	outTexCoord = TextureCoordinate0;
+	outTexCoord = TextureCoordinate0 + TextureOffset;
 #else
 	outTexCoord = vec2(0.0);
 #endif
