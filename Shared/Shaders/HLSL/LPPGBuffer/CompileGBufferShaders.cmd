@@ -1,10 +1,10 @@
 @echo off
-rem Copyright (c) Weekend Game Studio. All rights reserved.
+rem Copyright © 2017 Wave Engine S.L. All rights reserved.
 
 setlocal
 set error=0
 
-set fxcpath="C:\Program Files (x86)\Windows Kits\8.1\bin\x86\fxc.exe"
+set fxcpath="C:\Program Files (x86)\Windows Kits\10\bin\x86\fxc.exe"
 
 call :CompileShader LPPGBuffer vs vsGBuffer
 call :CompileShader LPPGBuffer vs vsGBuffer NORMAL

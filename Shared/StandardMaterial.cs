@@ -1,11 +1,4 @@
-﻿#region File Description
-//-----------------------------------------------------------------------------
-// StandardMaterial
-//
-// Copyright © 2017 Wave Engine S.L. All rights reserved.
-// Use is subject to license terms.
-//-----------------------------------------------------------------------------
-#endregion
+﻿// Copyright © 2017 Wave Engine S.L. All rights reserved. Use is subject to license terms.
 
 #region Using Statements
 using System;
@@ -105,7 +98,7 @@ namespace WaveEngine.Materials
         /// </summary>
         private static ShaderTechnique[] techniques =
         {
-            // Forward pass            
+            // Forward pass
             new ShaderTechnique("Simple",   "vsStandardMaterial", "psStandardMaterial", VertexPosition.VertexFormat),
 
             new ShaderTechnique("L",        "vsStandardMaterial", "psStandardMaterial", VertexPosition.VertexFormat,                null,                                   new string[] { "LIT" }),
@@ -203,11 +196,12 @@ namespace WaveEngine.Materials
 
 #if ANDROID
             // Video texture
-            new ShaderTechnique("Video", "vsStandardMaterialVideo", "psStandardMaterialVideo ", VertexPositionTexture.VertexFormat, null, null),  
+            new ShaderTechnique("Video", "vsStandardMaterialVideo", "psStandardMaterialVideo ", VertexPositionTexture.VertexFormat, null, null),
 #endif
         };
 
         #region Struct
+
         /// <summary>
         /// GBuffer Shader parameters.
         /// </summary>
@@ -300,7 +294,7 @@ namespace WaveEngine.Materials
         /// </summary>
         /// <value>
         /// The alpha.
-        /// </value>   
+        /// </value>
         [DataMember]
         [RenderPropertyAsSlider(0, 1, 0.1f)]
         public float Alpha { get; set; }
@@ -310,7 +304,7 @@ namespace WaveEngine.Materials
         /// </summary>
         /// <value>
         /// The reference alpha.
-        /// </value>      
+        /// </value>
         [DataMember]
         [RenderPropertyAsSlider(0, 1, 0.1f)]
         public float ReferenceAlpha { get; set; }
@@ -320,7 +314,7 @@ namespace WaveEngine.Materials
         /// </summary>
         /// <value>
         /// The specular power.
-        /// </value>      
+        /// </value>
         [DataMember]
         [RenderPropertyAsSlider(0, 255, 1)]
         public float SpecularPower { get; set; }
@@ -843,6 +837,7 @@ namespace WaveEngine.Materials
         #endregion
 
         #region Initialize
+
         /// <summary>
         /// Initializes a new instance of the <see cref="StandardMaterial"/> class.
         /// </summary>
@@ -970,7 +965,7 @@ namespace WaveEngine.Materials
         public override void SetParameters(bool cached)
         {
             base.SetParameters(cached);
-                     
+
             if (this.DeferredLightingPass == DeferredLightingPass.ForwardPass)
             {
                 if (this.renderManager != null)
@@ -992,13 +987,13 @@ namespace WaveEngine.Materials
                         this.graphicsDevice.SetTexture(this.LightingTexture, 4);
                     }
                 }
-                
+
                 this.shaderParameters.ReferenceAlpha = this.ReferenceAlpha;
                 this.shaderParameters.DiffuseColor = this.diffuseColor;
                 this.shaderParameters.EmissiveColor = this.emissiveColor;
                 this.shaderParameters.AmbientColor = this.ambientColor;
                 this.shaderParameters.Alpha = this.Alpha;
-                this.shaderParameters.TextureOffset = this.TexcoordOffset;                
+                this.shaderParameters.TextureOffset = this.TexcoordOffset;
 
                 this.Parameters = this.shaderParameters;
 
@@ -1032,6 +1027,7 @@ namespace WaveEngine.Materials
         #endregion
 
         #region Private Methods
+
         /// <summary>
         /// Refreshes the texture.
         /// </summary>
@@ -1045,7 +1041,7 @@ namespace WaveEngine.Materials
 
         /// <summary>
         /// Unload the texture.
-        /// </summary>        
+        /// </summary>
         /// <param name="texture">The texture.</param>
         private void UnloadTexture(ref Texture texture)
         {

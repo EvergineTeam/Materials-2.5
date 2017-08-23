@@ -1,11 +1,4 @@
-#region File Description
-//-----------------------------------------------------------------------------
-// DualMaterial
-//
-// Copyright � 2017 Wave Engine S.L. All rights reserved.
-// Use is subject to license terms.
-//-----------------------------------------------------------------------------
-#endregion
+﻿// Copyright © 2017 Wave Engine S.L. All rights reserved. Use is subject to license terms.
 
 #region Using Statements
 using System;
@@ -33,7 +26,7 @@ namespace WaveEngine.Materials
         Lightmap,
 
         /// <summary>
-        /// Multiplicative blending (Difusse1 * Difusse2).. 
+        /// Multiplicative blending (Difusse1 * Difusse2)..
         /// </summary>
         Multiplicative,
 
@@ -131,6 +124,7 @@ namespace WaveEngine.Materials
         };
 
         #region Struct
+
         /// <summary>
         /// GBuffer Shader parameters.
         /// </summary>
@@ -199,6 +193,7 @@ namespace WaveEngine.Materials
         private MaterialParameters shaderParameters;
 
         #region Properties
+
         /// <summary>
         /// Gets or sets the shader mode.
         /// </summary>
@@ -406,7 +401,7 @@ namespace WaveEngine.Materials
                 this.normal = value;
             }
         }
-        
+
         #region techniques array
 
         /// <summary>
@@ -415,26 +410,26 @@ namespace WaveEngine.Materials
         private static string[] s = new string[]
                 {
                     "None",
-                    "F",   
-                    "S",   
-                    "FSM", 
-                    "FSA", 
+                    "F",
+                    "S",
+                    "FSM",
+                    "FSA",
                     "FSK",
                     "FSI",
-                    "L",   
-                    "LF",  
-                    "LS",  
+                    "L",
+                    "LF",
+                    "LS",
                     "LFSM",
                     "LFSA",
                     "LFSK",
                     "LFSI",
 
-                    "G",   
-                    "GN",  
-                    "GD",  
-                    "GDN", 
-                    "GR",  
-                    "GRN", 
+                    "G",
+                    "GN",
+                    "GD",
+                    "GDN",
+                    "GR",
+                    "GRN",
                     "G",
                     "GN",
                     "GD",
@@ -446,7 +441,7 @@ namespace WaveEngine.Materials
         #endregion
 
         /// <summary>
-        /// Gets or sets the current technique.
+        /// Gets gets or sets the current technique.
         /// </summary>
         /// <value>
         /// The current technique.
@@ -554,6 +549,7 @@ namespace WaveEngine.Materials
         #endregion
 
         #region Initialize
+
         /// <summary>
         /// Initializes a new instance of the <see cref="DualMaterial"/> class.
         /// </summary>
@@ -713,6 +709,7 @@ namespace WaveEngine.Materials
         #endregion
 
         #region Private Methods
+
         /// <summary>
         /// Refreshes the texture.
         /// </summary>
@@ -726,7 +723,7 @@ namespace WaveEngine.Materials
 
         /// <summary>
         /// Unload the texture.
-        /// </summary>        
+        /// </summary>
         /// <param name="texture">The texture.</param>
         private void UnloadTexture(ref Texture texture)
         {

@@ -25,9 +25,9 @@ cbuffer Matrices : register(b0)
 cbuffer Parameters : register(b1)
 {
 	float3		CameraPosition			: packoffset(c0.x);
-	float		ReferenceAlpha : packoffset(c0.w);
+	float		ReferenceAlpha			: packoffset(c0.w);
 	float3		DiffuseColor			: packoffset(c1.x);
-	float		Alpha : packoffset(c1.w);
+	float		Alpha					: packoffset(c1.w);
 	float3		AmbientColor			: packoffset(c2.x);
 	float3		EmissiveColor			: packoffset(c3.x);
 	float2		TextureOffset			: packoffset(c4.x);
@@ -177,5 +177,5 @@ diffuseIntensity += AmbientColor;
 
 	float4 finalColor = float4(color, alphaMask);
 	finalColor *= Alpha;
-	return finalColor;
+	return albedo;
 }

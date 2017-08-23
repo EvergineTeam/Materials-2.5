@@ -1,11 +1,4 @@
-﻿#region File Description
-//-----------------------------------------------------------------------------
-// SkyboxMaterial
-//
-// Copyright © 2017 Wave Engine S.L. All rights reserved.
-// Use is subject to license terms.
-//-----------------------------------------------------------------------------
-#endregion
+﻿// Copyright © 2017 Wave Engine S.L. All rights reserved. Use is subject to license terms.
 
 #region Using Statements
 using WaveEngine.Framework.Graphics;
@@ -39,7 +32,7 @@ namespace WaveEngine.Materials
         #region Properties
 
         /// <summary>
-        /// Gets or sets the current technique.
+        /// Gets gets or sets the current technique.
         /// </summary>
         /// <value>
         /// The current technique.
@@ -62,6 +55,7 @@ namespace WaveEngine.Materials
         #endregion
 
         #region Initialize
+
         /// <summary>
         /// Initializes a new instance of the <see cref="SkyboxMaterial" /> class.
         /// </summary>
@@ -126,6 +120,7 @@ namespace WaveEngine.Materials
         #endregion
 
         #region Public Methods
+
         /// <summary>
         /// Unload this material.
         /// </summary>
