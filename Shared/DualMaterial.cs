@@ -1,4 +1,4 @@
-﻿// Copyright © 2017 Wave Engine S.L. All rights reserved. Use is subject to license terms.
+﻿// Copyright © 2018 Wave Engine S.L. All rights reserved. Use is subject to license terms.
 
 #region Using Statements
 using System;
@@ -561,9 +561,9 @@ namespace WaveEngine.Materials
         /// <summary>
         /// Initializes a new instance of the <see cref="DualMaterial"/> class.
         /// </summary>
-        /// <param name="layerType">The associated layer</param>
-        public DualMaterial(Type layerType)
-            : base(layerType)
+        /// <param name="layerId">The associated layer</param>
+        public DualMaterial(int layerId)
+            : base(layerId)
         {
         }
 
@@ -571,9 +571,9 @@ namespace WaveEngine.Materials
         /// Initializes a new instance of the <see cref="DualMaterial"/> class.
         /// </summary>
         /// <param name="diffuseColor">The diffuse color.</param>
-        /// <param name="layerType">The associated layer</param>
-        public DualMaterial(Color diffuseColor, Type layerType)
-            : this(layerType)
+        /// <param name="layerId">The associated layer</param>
+        public DualMaterial(Color diffuseColor, int layerId)
+            : this(layerId)
         {
             this.DiffuseColor = diffuseColor;
         }
@@ -581,12 +581,12 @@ namespace WaveEngine.Materials
         /// <summary>
         /// Initializes a new instance of the <see cref="DualMaterial"/> class.
         /// </summary>
-        /// <param name="layerType">The associated layer</param>
+        /// <param name="layerId">The associated layer</param>
         /// <param name="texture1Path">The texture1 path.</param>
         /// <param name="texture2Path">The texture2 path.</param>
         /// <param name="normalPath">The normal path.</param>
-        public DualMaterial(Type layerType, string texture1Path = null, string texture2Path = null, string normalPath = null)
-            : this(layerType)
+        public DualMaterial(int layerId, string texture1Path = null, string texture2Path = null, string normalPath = null)
+            : this(layerId)
         {
             this.texture1Path = texture1Path;
             this.texture2Path = texture2Path;
@@ -596,12 +596,12 @@ namespace WaveEngine.Materials
         /// <summary>
         /// Initializes a new instance of the <see cref="DualMaterial"/> class.
         /// </summary>
-        /// <param name="layerType">The associated layer</param>
+        /// <param name="layerId">The associated layer</param>
         /// <param name="texture1">The texture1.</param>
         /// <param name="texture2">The texture2.</param>
         /// <param name="normal">The normal.</param>
-        public DualMaterial(Type layerType, Texture texture1 = null, Texture texture2 = null, Texture normal = null)
-            : this(layerType)
+        public DualMaterial(int layerId, Texture texture1 = null, Texture texture2 = null, Texture normal = null)
+            : this(layerId)
         {
             this.texture1 = texture1;
             this.texture2 = texture2;
@@ -666,43 +666,46 @@ namespace WaveEngine.Materials
         {
             base.SetParameters(cached);
 
-            Camera camera = this.renderManager.CurrentDrawingCamera;
-
-            if (this.DeferredLightingPass == DeferredLightingPass.ForwardPass)
+            if (!cached)
             {
-                this.shaderParameters.DiffuseColor = this.diffuseColor;
-                this.shaderParameters.AmbientColor = this.ambientColor;
-                this.shaderParameters.TexCoordFix = this.renderManager.GraphicsDevice.RenderTargets.RenderTargetActive ? 1 : -1;
-                this.shaderParameters.TextureOffset1 = this.TexcoordOffset1;
-                this.shaderParameters.TextureOffset2 = this.TexcoordOffset2;
+                Camera camera = this.renderManager.CurrentDrawingCamera;
 
-                this.Parameters = this.shaderParameters;
-
-                this.LightingTexture = camera.LightingRT;
-                if (this.LightingTexture != null)
+                if (this.DeferredLightingPass == DeferredLightingPass.ForwardPass)
                 {
-                    this.graphicsDevice.SetTexture(this.LightingTexture, 2);
+                    this.shaderParameters.DiffuseColor = this.diffuseColor;
+                    this.shaderParameters.AmbientColor = this.ambientColor;
+                    this.shaderParameters.TexCoordFix = this.renderManager.GraphicsDevice.RenderTargets.RenderTargetActive ? 1 : -1;
+                    this.shaderParameters.TextureOffset1 = this.TexcoordOffset1;
+                    this.shaderParameters.TextureOffset2 = this.TexcoordOffset2;
+
+                    this.Parameters = this.shaderParameters;
+
+                    this.LightingTexture = camera.LightingRT;
+                    if (this.LightingTexture != null)
+                    {
+                        this.graphicsDevice.SetTexture(this.LightingTexture, 2);
+                    }
+
+                    if (this.texture1 != null)
+                    {
+                        this.graphicsDevice.SetTexture(this.texture1, 0);
+                    }
+
+                    if (this.texture2 != null)
+                    {
+                        this.graphicsDevice.SetTexture(this.texture2, 1);
+                    }
                 }
-
-                if (this.texture1 != null)
+                else
                 {
-                    this.graphicsDevice.SetTexture(this.texture1, 0);
-                }
+                    this.gbufferShaderParameters.SpecularPower = this.SpecularPower;
+                    this.gbufferShaderParameters.TextureOffset = this.TexcoordOffset1;
+                    this.Parameters = this.gbufferShaderParameters;
 
-                if (this.texture2 != null)
-                {
-                    this.graphicsDevice.SetTexture(this.texture2, 1);
-                }
-            }
-            else
-            {
-                this.gbufferShaderParameters.SpecularPower = this.SpecularPower;
-                this.gbufferShaderParameters.TextureOffset = this.TexcoordOffset1;
-                this.Parameters = this.gbufferShaderParameters;
-
-                if (this.normal != null)
-                {
-                    this.graphicsDevice.SetTexture(this.normal, 0);
+                    if (this.normal != null)
+                    {
+                        this.graphicsDevice.SetTexture(this.normal, 0);
+                    }
                 }
             }
         }

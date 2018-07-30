@@ -74,8 +74,8 @@
   </ItemGroup>
   <Import Project="..\..\Shared\WaveEngine.Materials.Shared.projitems" Label="Shared" Condition="Exists('..\..\Shared\WaveEngine.Materials.Shared.projitems')" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <Import Project="$(SolutionDir)\Resources\StyleCopV2\stylecop.props" />
-  <Import Project="$(SolutionDir)\Resources\PostBuildTargets\Windows.targets" />
+  <Import Project="..\..\..\..\Resources\StyleCopV2\stylecop.props" />
+  <Import Project="..\..\..\..\Resources\PostBuildTargets\Windows.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

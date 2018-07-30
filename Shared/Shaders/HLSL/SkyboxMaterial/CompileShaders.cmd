@@ -1,5 +1,5 @@
 @echo off
-rem Copyright © 2017 Wave Engine S.L. All rights reserved.
+rem Copyright © 2018 Wave Engine S.L. All rights reserved.
 
 setlocal
 set error=0

@@ -1,4 +1,4 @@
-﻿// Copyright © 2017 Wave Engine S.L. All rights reserved. Use is subject to license terms.
+﻿// Copyright © 2018 Wave Engine S.L. All rights reserved. Use is subject to license terms.
 
 #region Using Statements
 using System;
@@ -538,9 +538,9 @@ namespace WaveEngine.Materials
         /// <summary>
         /// Initializes a new instance of the <see cref="EnvironmentMaterial"/> class.
         /// </summary>
-        /// <param name="layerType">The associated layer</param>
-        public EnvironmentMaterial(Type layerType)
-            : base(layerType)
+        /// <param name="layerId">The associated layer</param>
+        public EnvironmentMaterial(int layerId)
+            : base(layerId)
         {
         }
 
@@ -548,9 +548,9 @@ namespace WaveEngine.Materials
         /// Initializes a new instance of the <see cref="EnvironmentMaterial"/> class.
         /// </summary>
         /// <param name="diffuseColor">The diffuse color.</param>
-        /// <param name="layerType">The associated layer</param>
-        public EnvironmentMaterial(Color diffuseColor, Type layerType)
-            : this(layerType)
+        /// <param name="layerId">The associated layer</param>
+        public EnvironmentMaterial(Color diffuseColor, int layerId)
+            : this(layerId)
         {
             this.DiffuseColor = diffuseColor;
         }
@@ -558,12 +558,12 @@ namespace WaveEngine.Materials
         /// <summary>
         /// Initializes a new instance of the <see cref="EnvironmentMaterial"/> class.
         /// </summary>
-        /// <param name="layerType">The associated layer</param>
+        /// <param name="layerId">The associated layer</param>
         /// <param name="diffusePath">The diffuse path.</param>
         /// <param name="environmentPath">The environment path.</param>
         /// <param name="normalPath">The normal path.</param>
-        public EnvironmentMaterial(Type layerType, string diffusePath = null, string environmentPath = null, string normalPath = null)
-            : this(layerType)
+        public EnvironmentMaterial(int layerId, string diffusePath = null, string environmentPath = null, string normalPath = null)
+            : this(layerId)
         {
             this.environmentPath = environmentPath;
             this.diffusePath = diffusePath;
@@ -573,12 +573,12 @@ namespace WaveEngine.Materials
         /// <summary>
         /// Initializes a new instance of the <see cref="EnvironmentMaterial"/> class.
         /// </summary>
-        /// <param name="layerType">The associated layer</param>
+        /// <param name="layerId">The associated layer</param>
         /// <param name="diffuse">The diffuse.</param>
         /// <param name="environment">The environment.</param>
         /// <param name="normal">The normal.</param>
-        public EnvironmentMaterial(Type layerType, Texture diffuse = null, TextureCube environment = null, Texture normal = null)
-            : this(layerType)
+        public EnvironmentMaterial(int layerId, Texture diffuse = null, TextureCube environment = null, Texture normal = null)
+            : this(layerId)
         {
             this.diffuse = diffuse;
             this.environment = environment;
@@ -648,53 +648,56 @@ namespace WaveEngine.Materials
         {
             base.SetParameters(cached);
 
-            Camera camera = this.renderManager.CurrentDrawingCamera;
-
-            if (this.DeferredLightingPass == DeferredLightingPass.ForwardPass)
+            if (!cached)
             {
-                this.shaderParameters.CameraPosition = camera.Position;
-                this.shaderParameters.FresnelFactor = this.FresnelFactor;
-                this.shaderParameters.DiffuseColor = this.diffuseColor;
-                this.shaderParameters.EnvironmentAmount = this.EnvironmentAmount;
-                this.shaderParameters.AmbientColor = this.ambientColor;
-                this.shaderParameters.TexCoordFix = this.renderManager.GraphicsDevice.RenderTargets.RenderTargetActive ? 1 : -1;
+                Camera camera = this.renderManager.CurrentDrawingCamera;
 
-                this.Parameters = this.shaderParameters;
-
-                if (this.diffuse != null)
+                if (this.DeferredLightingPass == DeferredLightingPass.ForwardPass)
                 {
-                    this.graphicsDevice.SetTexture(this.diffuse, 0);
+                    this.shaderParameters.CameraPosition = camera.Position;
+                    this.shaderParameters.FresnelFactor = this.FresnelFactor;
+                    this.shaderParameters.DiffuseColor = this.diffuseColor;
+                    this.shaderParameters.EnvironmentAmount = this.EnvironmentAmount;
+                    this.shaderParameters.AmbientColor = this.ambientColor;
+                    this.shaderParameters.TexCoordFix = this.renderManager.GraphicsDevice.RenderTargets.RenderTargetActive ? 1 : -1;
+
+                    this.Parameters = this.shaderParameters;
+
+                    if (this.diffuse != null)
+                    {
+                        this.graphicsDevice.SetTexture(this.diffuse, 0);
+                    }
+
+                    if (this.environment != null)
+                    {
+                        this.graphicsDevice.SetTexture(this.environment, 1);
+                    }
+
+                    this.LightingTexture = camera.LightingRT;
+                    if (this.LightingTexture != null)
+                    {
+                        this.graphicsDevice.SetTexture(this.LightingTexture, 2);
+                    }
+
+                    if (camera.GBufferRT0 != null)
+                    {
+                        this.graphicsDevice.SetTexture(camera.GBufferRT0, 3);
+                    }
+
+                    if (this.normal != null)
+                    {
+                        this.graphicsDevice.SetTexture(this.normal, 4);
+                    }
                 }
-
-                if (this.environment != null)
+                else
                 {
-                    this.graphicsDevice.SetTexture(this.environment, 1);
-                }
+                    this.gbufferShaderParameters.SpecularPower = this.SpecularPower;
+                    this.Parameters = this.gbufferShaderParameters;
 
-                this.LightingTexture = camera.LightingRT;
-                if (this.LightingTexture != null)
-                {
-                    this.graphicsDevice.SetTexture(this.LightingTexture, 2);
-                }
-
-                if (camera.GBufferRT0 != null)
-                {
-                    this.graphicsDevice.SetTexture(camera.GBufferRT0, 3);
-                }
-
-                if (this.normal != null)
-                {
-                    this.graphicsDevice.SetTexture(this.normal, 4);
-                }
-            }
-            else
-            {
-                this.gbufferShaderParameters.SpecularPower = this.SpecularPower;
-                this.Parameters = this.gbufferShaderParameters;
-
-                if (this.normal != null)
-                {
-                    this.graphicsDevice.SetTexture(this.normal, 0);
+                    if (this.normal != null)
+                    {
+                        this.graphicsDevice.SetTexture(this.normal, 0);
+                    }
                 }
             }
         }

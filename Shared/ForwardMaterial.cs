@@ -1,4 +1,4 @@
-﻿// Copyright © 2017 Wave Engine S.L. All rights reserved. Use is subject to license terms.
+﻿// Copyright © 2018 Wave Engine S.L. All rights reserved. Use is subject to license terms.
 
 #region Using Statements
 using System;
@@ -15,7 +15,15 @@ using WaveEngine.Framework.Graphics;
 namespace WaveEngine.Materials
 {
     /// <summary>
-    /// Light PrePass Material
+    /// Forward lighting Material
+    /// <example>
+    /// #### Recipes and samples
+    /// <list type="bullet">
+    ///    <item>
+    ///        <description>[Materials samples](https://github.com/WaveEngine/Samples/tree/master/Materials)</description>
+    ///    </item>
+    /// </list>
+    /// </example>
     /// </summary>
     [DataContract(Namespace = "WaveEngine.Materials")]
     public class ForwardMaterial : Material
@@ -251,7 +259,7 @@ namespace WaveEngine.Materials
         /// Gets or sets the color of the diffuse.
         /// </summary>
         /// <value>
-        /// The color of the diffuse.
+        /// The diffuse color.
         /// </value>
         public Color DiffuseColor
         {
@@ -270,7 +278,7 @@ namespace WaveEngine.Materials
         /// Gets or sets the color of the ambient.
         /// </summary>
         /// <value>
-        /// The color of the ambient.
+        /// The ambient color.
         /// </value>
         public Color AmbientColor
         {
@@ -343,7 +351,7 @@ namespace WaveEngine.Materials
         /// Gets or sets the diffuse.
         /// </summary>
         /// <value>
-        /// The diffuse.
+        /// The diffuse texture.
         /// </value>
         [DontRenderProperty]
         public Texture Diffuse
@@ -363,7 +371,7 @@ namespace WaveEngine.Materials
         /// Gets or sets the ambient.
         /// </summary>
         /// <value>
-        /// The ambient.
+        /// The ambient texture.
         /// </value>
         [DontRenderProperty]
         public TextureCube Ambient
@@ -539,9 +547,9 @@ namespace WaveEngine.Materials
         /// <summary>
         /// Initializes a new instance of the <see cref="ForwardMaterial"/> class.
         /// </summary>
-        /// <param name="layerType">The associated layer</param>
-        public ForwardMaterial(Type layerType)
-            : base(layerType)
+        /// <param name="layerId">The associated layer</param>
+        public ForwardMaterial(int layerId)
+            : base(layerId)
         {
         }
 
@@ -549,9 +557,9 @@ namespace WaveEngine.Materials
         /// Initializes a new instance of the <see cref="ForwardMaterial"/> class.
         /// </summary>
         /// <param name="diffuseColor">The diffuse color.</param>
-        /// <param name="layerType">The associated layer</param>
-        public ForwardMaterial(Color diffuseColor, Type layerType)
-            : this(layerType)
+        /// <param name="layerId">The associated layer</param>
+        public ForwardMaterial(Color diffuseColor, int layerId)
+            : this(layerId)
         {
             this.DiffuseColor = diffuseColor;
         }
@@ -559,11 +567,11 @@ namespace WaveEngine.Materials
         /// <summary>
         /// Initializes a new instance of the <see cref="ForwardMaterial"/> class.
         /// </summary>
-        /// <param name="layerType">The associated layer</param>
+        /// <param name="layerId">The associated layer</param>
         /// <param name="diffusePath">The diffuse path.</param>
         /// <param name="ambientPath">The ambient path.</param>
-        public ForwardMaterial(Type layerType, string diffusePath = null, string ambientPath = null)
-            : this(layerType)
+        public ForwardMaterial(int layerId, string diffusePath = null, string ambientPath = null)
+            : this(layerId)
         {
             this.ambientPath = ambientPath;
             this.diffusePath = diffusePath;
@@ -572,18 +580,18 @@ namespace WaveEngine.Materials
         /// <summary>
         /// Initializes a new instance of the <see cref="ForwardMaterial"/> class.
         /// </summary>
-        /// <param name="layerType">The associated layer</param>
-        /// <param name="diffuse">The diffuse.</param>
-        /// <param name="ambient">The ambient.</param>
-        public ForwardMaterial(Type layerType, Texture diffuse = null, TextureCube ambient = null)
-            : this(layerType)
+        /// <param name="layerId">The associated layer</param>
+        /// <param name="diffuse">The diffuse texture.</param>
+        /// <param name="ambient">The ambient texture.</param>
+        public ForwardMaterial(int layerId, Texture diffuse = null, TextureCube ambient = null)
+            : this(layerId)
         {
             this.diffuse = diffuse;
             this.ambient = ambient;
         }
 
         /// <summary>
-        /// Defaults the values.
+        /// Default values
         /// </summary>
         protected override void DefaultValues()
         {
@@ -625,59 +633,62 @@ namespace WaveEngine.Materials
         {
             base.SetParameters(cached);
 
-            Camera camera = this.renderManager.CurrentDrawingCamera;
-
-            this.shaderParameters.CameraPosition = camera.Position;
-            this.shaderParameters.ReferenceAlpha = this.ReferenceAlpha;
-            this.shaderParameters.DiffuseColor = this.diffuseColor;
-            this.shaderParameters.Alpha = this.Alpha;
-            this.shaderParameters.AmbientColor = this.ambientColor;
-            this.shaderParameters.SpecularPower = this.SpecularPower;
-            this.shaderParameters.SpecularIntensity = this.SpecularIntensity;
-            this.shaderParameters.TextureOffset = this.TexcoordOffset;
-
-            if (this.LightingEnabled)
+            if (!cached)
             {
-                if (this.nearbyLight != null)
+                Camera camera = this.renderManager.CurrentDrawingCamera;
+
+                this.shaderParameters.CameraPosition = camera.Position;
+                this.shaderParameters.ReferenceAlpha = this.ReferenceAlpha;
+                this.shaderParameters.DiffuseColor = this.diffuseColor;
+                this.shaderParameters.Alpha = this.Alpha;
+                this.shaderParameters.AmbientColor = this.ambientColor;
+                this.shaderParameters.SpecularPower = this.SpecularPower;
+                this.shaderParameters.SpecularIntensity = this.SpecularIntensity;
+                this.shaderParameters.TextureOffset = this.TexcoordOffset;
+
+                if (this.LightingEnabled)
                 {
-                    // Common parameters
-                    this.Light.Color = this.nearbyLight.Color.ToVector3();
-                    this.Light.Intensity = this.nearbyLight.Intensity;
+                    if (this.nearbyLight != null)
+                    {
+                        // Common parameters
+                        this.Light.Color = this.nearbyLight.Color.ToVector3();
+                        this.Light.Intensity = this.nearbyLight.Intensity;
 
-                    if (this.nearbyLight is DirectionalLightProperties)
-                    {
-                        DirectionalLightProperties directional = this.nearbyLight as DirectionalLightProperties;
-                        this.Light.Direction = directional.Direction;
-                    }
-                    else if (this.nearbyLight is PointLightProperties)
-                    {
-                        PointLightProperties point = this.nearbyLight as PointLightProperties;
-                        this.Light.Position = point.Position;
-                        this.Light.LightRange = point.LightRange;
-                    }
-                    else
-                    {
-                        SpotLightProperties spot = this.nearbyLight as SpotLightProperties;
-                        this.Light.Direction = spot.Direction;
-                        this.Light.LightRange = spot.LightRange;
-                        this.Light.Position = spot.Position;
-                        this.Light.ConeAngle = (float)Math.Cos(spot.LightConeAngle / 2);
-                    }
+                        if (this.nearbyLight is DirectionalLightProperties)
+                        {
+                            DirectionalLightProperties directional = this.nearbyLight as DirectionalLightProperties;
+                            this.Light.Direction = directional.Direction;
+                        }
+                        else if (this.nearbyLight is PointLightProperties)
+                        {
+                            PointLightProperties point = this.nearbyLight as PointLightProperties;
+                            this.Light.Position = point.Position;
+                            this.Light.LightRange = point.LightRange;
+                        }
+                        else
+                        {
+                            SpotLightProperties spot = this.nearbyLight as SpotLightProperties;
+                            this.Light.Direction = spot.Direction;
+                            this.Light.LightRange = spot.LightRange;
+                            this.Light.Position = spot.Position;
+                            this.Light.ConeAngle = (float)Math.Cos(spot.LightConeAngle / 2);
+                        }
 
-                    this.shaderParameters.Light = this.Light;
+                        this.shaderParameters.Light = this.Light;
+                    }
                 }
-            }
 
-            this.Parameters = this.shaderParameters;
+                this.Parameters = this.shaderParameters;
 
-            if (this.diffuse != null)
-            {
-                this.graphicsDevice.SetTexture(this.diffuse, 0);
-            }
+                if (this.diffuse != null)
+                {
+                    this.graphicsDevice.SetTexture(this.diffuse, 0);
+                }
 
-            if (this.ambient != null)
-            {
-                this.graphicsDevice.SetTexture(this.ambient, 1);
+                if (this.ambient != null)
+                {
+                    this.graphicsDevice.SetTexture(this.ambient, 1);
+                }
             }
         }
 

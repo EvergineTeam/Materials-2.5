@@ -1,4 +1,4 @@
-﻿// Copyright © 2017 Wave Engine S.L. All rights reserved. Use is subject to license terms.
+﻿// Copyright © 2018 Wave Engine S.L. All rights reserved. Use is subject to license terms.
 
 #region Using Statements
 using WaveEngine.Framework.Graphics;
@@ -61,7 +61,7 @@ namespace WaveEngine.Materials
         /// </summary>
         /// <param name="environmentMap">The environment map.</param>
         public SkyboxMaterial(string environmentMap)
-            : this(environmentMap, typeof(SkyboxLayer))
+            : this(environmentMap, DefaultLayers.Skybox)
         {
         }
 
@@ -70,7 +70,7 @@ namespace WaveEngine.Materials
         /// </summary>
         /// <param name="environmentMap">The environment map.</param>
         public SkyboxMaterial(TextureCube environmentMap)
-            : this(environmentMap, typeof(SkyboxLayer))
+            : this(environmentMap, DefaultLayers.Skybox)
         {
         }
 
@@ -79,7 +79,7 @@ namespace WaveEngine.Materials
         /// </summary>
         /// <param name="environmentMap">The environment map.</param>
         /// <param name="layer">The skybox associated layer</param>
-        public SkyboxMaterial(string environmentMap, Type layer)
+        public SkyboxMaterial(string environmentMap, int layer)
             : base(layer)
         {
             this.environmentMapPath = environmentMap;
@@ -90,7 +90,7 @@ namespace WaveEngine.Materials
         /// </summary>
         /// <param name="environmentMap">The environment map.</param>
         /// <param name="layer">The skybox associated layer</param>
-        public SkyboxMaterial(TextureCube environmentMap, Type layer)
+        public SkyboxMaterial(TextureCube environmentMap, int layer)
             : base(layer)
         {
         }

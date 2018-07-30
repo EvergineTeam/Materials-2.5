@@ -1,12 +1,12 @@
 ﻿//-----------------------------------------------------------------------------
 // vsForwardMaterial.vert
 //
-// Copyright © 2017 Wave Engine S.L. All rights reserved.
+// Copyright © 2018 Wave Engine S.L. All rights reserved.
 // Use is subject to license terms.
 //-----------------------------------------------------------------------------
 
 // AMBI			=	Ambient
-// VTEX			=	Vextex Texture
+// VTEX			=	Vertex Texture
 // VCOLOR		=	Vertex Color
 // VLIT			=	Lighting
 
